@@ -7,7 +7,14 @@
 %line
 
 %{
-int RANGO_ENTERO = 65535;
+    int RANGO_ENTERO = 65535;
+    private Symbol symbol(int type) {
+          //System.out.println("[LEX] TOKEN < " + Simbolos.terminalNames[type] + " > : " + yytext());
+          return new Symbol(type, yyline, yycolumn, yytext());
+    }
+    private Symbol symbol(int type, Object value) {
+          return new Symbol(type, yyline, yycolumn, value);
+    }
 %}
 
 DIGITO 	        =	[0-9]
