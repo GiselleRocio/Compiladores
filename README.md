@@ -6,3 +6,5 @@ Para ejecutar el codigo y que muestre las capturas por pantalla:
 2. jflex Lexico.jflex
 3. javac lexico.java
 4. java lexico Prueba.txt
+
+O ejecutar ejecutable.bat (doble click)
