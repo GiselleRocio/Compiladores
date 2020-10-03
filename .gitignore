@@ -1,2 +1,5 @@
 # Project exclude paths
 /target/
+.idea/vcs.xml
+.idea/compiler.xml
+*.xml
