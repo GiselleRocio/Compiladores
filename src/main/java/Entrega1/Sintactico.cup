@@ -1,1 +1,12 @@
 import java_cup.runtime.*;
+
+     //Declaracion de terminales
+
+terminal op_asig, op_suma, op_resta, op_mul, op_div;
+terminal String id, const_int, const_float, const_str;
+
+                //Declaracion de no terminales
+
+non terminal Symbol S, PROG, SENT,
+                    ASIG,
+                    EXPRESION, TERMINO, FACTOR;
