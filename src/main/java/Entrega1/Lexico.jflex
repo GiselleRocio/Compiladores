@@ -5,6 +5,10 @@
 %standalone
 %column
 %line
+%cupsym Simbolos
+%cup
+%ignorecase
+%unicode
 
 %{
     int RANGO_ENTERO = 65535;
@@ -47,11 +51,8 @@ PUT             =   "PUT"
 GET             =   "GET"
 DIM             =   "DIM"
 AS              =   "AS"
-DECVAR 	        =	"DECVAR"
 INTEGER	        =	"Integer"
 FLOAT       	=	"Float"
-ENDDEC      	=	"ENDDEC"
-WRITE       	=	"write"
 WHILE       	=	"while"
 IF	            =	"if"
 ELSE        	=	"Else"
@@ -67,69 +68,66 @@ ID 		        =	{LETRA}({LETRA}|{DIGITO})*
 
 %%
 
-{PUT} 		    |
-{GET} 		    |
-{DIM} 	    	|
-{AS} 		    |
-{DECVAR} 		|
-{INTEGER} 		|
-{FLOAT} 		|
-{ENDDEC} 		|
-{WHILE} 		|
-{WRITE} 		|
-{ELSE}   		|
-{IF}		    		{ System.out.printf("\n Palabra reservada : [%s] ", yytext()) ; }
+{PUT} 		     {return symbol(Simbolos.PUT);}
+{GET} 		     {return symbol(Simbolos.GET);}
+{DIM} 	    	 {return symbol(Simbolos.DIM);}
+{AS} 		     {return symbol(Simbolos.AS);}
+{INTEGER} 		 {return symbol(Simbolos.INTEGER);}
+{FLOAT} 		 {return symbol(Simbolos.FLOAT);}
+{WHILE} 		 {return symbol(Simbolos.WHILE);}
+{ELSE}   		 {return symbol(Simbolos.ELSE);}
+{IF}		     {return symbol(Simbolos.IF);}
 
-{OP_AS}			|
-{OP_SUM}		|
-{OP_RES}		|
-{OP_DIV}		|
-{OP_MUL}		|
-{OP_MEN}		|
-{OP_MENIG}		|
-{OP_MAY}		|
-{OP_MAYIG}		|
-{OP_DIST}		|
-{OP_COMP}		        { System.out.printf("\n Operador : [%s] ", yytext()) ; }
+{OP_AS}			 {return symbol(Simbolos.OP_AS);}
+{OP_SUM}		 {return symbol(Simbolos.OP_SUM);}
+{OP_RES}		 {return symbol(Simbolos.OP_RES);}
+{OP_DIV}		 {return symbol(Simbolos.OP_DIV);}
+{OP_MUL}		 {return symbol(Simbolos.OP_MUL);}
+{OP_MEN}		 {return symbol(Simbolos.OP_MEN);}
+{OP_MENIG}		 {return symbol(Simbolos.OP_MENIG);}
+{OP_MAY}		 {return symbol(Simbolos.OP_MAY);}
+{OP_MAYIG}		 {return symbol(Simbolos.OP_MAYIG);}
+{OP_DIST}		 {return symbol(Simbolos.OP_DIST);}
+{OP_COMP}		 {return symbol(Simbolos.OP_COMP);}
 
-{COMA}	    	|
-{PYC}	       	|
-{PA}	    	|
-{PC}	    	|
-{LA}	    	|
-{LC}	    	|
-{CA}	    	|
-{CC}	            	{ System.out.printf("\n Simbolo : [%s] ", yytext()) ; }
+{COMA}	    	 {return symbol(Simbolos.COMA);}
+{PYC}	         {return symbol(Simbolos.PYC);}
+{PA}	    	 {return symbol(Simbolos.PA);}
+{PC}	    	 {return symbol(Simbolos.PC);}
+{LA}	    	 {return symbol(Simbolos.LA);}
+{LC}	    	 {return symbol(Simbolos.LC);}
+{CA}	         {return symbol(Simbolos.CA);}
+{CC}	         {return symbol(Simbolos.CC);}
 
 
 
 
-{CTE_HEXA}  	|
-{CTE_BINARIA}	        { System.out.printf("\n Constante  : [%s] ", yytext()); }
+{CTE_HEXA}  	 {return symbol(Simbolos.CTE_HEXA);}
+{CTE_BINARIA}	      {return symbol(Simbolos.CTE_BINARIA);}
 {CONST_INT}				{
                             Integer constInt = Integer.parseInt(yytext());
                             if(constInt >= 0 && constInt <= RANGO_ENTERO)
-                                System.out.printf("\n Constante entera : [%s] ", yytext());
+                                return symbol(Simbolos.CONST_INT);
                              else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de la cadena string");
                         }
 {CONST_STR}             {
                             String constStr = yytext();
                             if(constStr.length() <= 32)
-                                System.out.printf("\n Constante string : [%s] ", yytext());
+                                return symbol(Simbolos.CONST_STR);
                             else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de los enteros");
                         }
 {CONST_FLOAT}	        {
                             Double constFloat = Double.parseDouble(yytext());
                             if( constFloat >= 0 && constFloat <= 2147483648L)
-                                System.out.printf("\n Constante float : [%s] ", yytext());
+                                return symbol(Simbolos.CONST_FLOAT);
                             else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de los flotantes");
                         }
 
 
 
-{ID}				    { System.out.printf("\n ID  : [%s] ", yytext()) ; }
+{ID}				    {  return symbol(Simbolos.ID); }
 
-.						{ System.out.printf("\n Simbolo NO reconocido: [%s] ", yytext()) ; }
+.						{   }
