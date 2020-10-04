@@ -35,5 +35,7 @@ public class Simbolos {
     public static final int CONST_STR = 33;
     public static final int CONST_FLOAT = 34;
     public static final int ID = 35;
+    public static final int OP_AND = 36;
+    public static final int OP_OR = 37;
 
 }

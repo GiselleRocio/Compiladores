@@ -38,7 +38,8 @@ OP_MAY      	=	">"
 OP_MAYIG        =	">="
 OP_DIST     	=	"<>"
 OP_COMP         =	"=="
-
+OP_AND          =   "&&"
+OP_OR           =   "||"
 COMA        	=	","
 PYC             =   ";"
 PA            	=	"("
@@ -90,6 +91,8 @@ ID 		        =	{LETRA}({LETRA}|{DIGITO})*
 {OP_MAYIG}		 {return symbol(Simbolos.OP_MAYIG);}
 {OP_DIST}		 {return symbol(Simbolos.OP_DIST);}
 {OP_COMP}		 {return symbol(Simbolos.OP_COMP);}
+{OP_AND}		 {return symbol(Simbolos.OP_AND);}
+{OP_OR}		     {return symbol(Simbolos.OP_OR);}
 
 {COMA}	    	 {return symbol(Simbolos.COMA);}
 {PYC}	         {return symbol(Simbolos.PYC);}
