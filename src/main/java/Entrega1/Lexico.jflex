@@ -7,6 +7,7 @@
 %line
 %cupsym Simbolos
 %cup
+
 %ignorecase
 %unicode
 

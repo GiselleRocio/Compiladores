@@ -36,5 +36,4 @@ public class Simbolos {
     public static final int CONST_FLOAT = 34;
     public static final int ID = 35;
 
-
 }
