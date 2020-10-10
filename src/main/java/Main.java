@@ -16,6 +16,7 @@ public class Main {
             System.err.println("El archivo " + fileName + " no existe");
             e.printStackTrace();
         } catch (Exception e) {
+            System.err.println(e);
             System.err.println("Hubo un error");
             e.printStackTrace();
         }

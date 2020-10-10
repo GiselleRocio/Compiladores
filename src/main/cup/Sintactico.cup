@@ -15,167 +15,270 @@ parser code     //Codigo que se le agrega al parser
 :}
 
 //Declaracion de terminales
-terminal  eof,  put, get, dim, as, integer,
-          float, while, if, else, op_as, op_sum,
-          op_res, op_mul, op_div, op_men, op_menig,
-          op_may, op_mayig, op_dist, coma, pyc, pa,
-          pc, la, lc, ca, cc, op_and, op_or, op_comp, op_asig ;
+terminal  PUT, GET, DIM, AS, INTEGER, STRING, FLOAT, WHILE, IF, ELSE, 
+          OP_AS, OP_SUM, OP_RES, OP_MUL, OP_DIV, OP_MEN, OP_MENIG, OP_MAY, OP_MAYIG, OP_DIST, 
+          COMA, PYC, PA, PC, LA, LC, CA, CC, OP_AND, OP_OR, 
+          OP_COMP, OP_NOT, CONTAR;
 
-terminal String id, const_int, const_float,
-                const_str, cte_hexa, cte_bin;
+
+terminal String ID, CONST_INT, CONST_FLOAT, CONST_STR, CTE_HEXA, CTE_BIN;
+
 
 //Declaracion de no terminales
-non terminal Symbol START, PROG, SENT, ASIG,
-                    EXPRESION, TERMINO, FACTOR, SELECCION, ITERACION, CONDICION,
-                    COMPARACION, COMPARADOR;
-start with START;
+non terminal Symbol inicio, prog, asig, sent, 
+                    expresion, termino, factor, seleccion,
+                    iteracion, condicion,comparacion, comparador, 
+                    seleccion_else, vacio, dec, sent_put, sent_get,
+                     list_var, list_td, tipo_dato, variable, list_exp;
+
+start with inicio;
 
 //Reglas gramaticales
-START          ::= PROG 
+inicio          ::= prog
                     {: 
-                         System.out.println("START -> PROG");
-                    :};   /// Esto es Start -> Programa
+                         System.out.println("start -> prog");
+                    :};   /// Esto es start -> programa
 
-PROG           ::= SENT
+prog           ::= sent
                     {: 
-                         System.out.println("PROG -> SENT");
+                         System.out.println("prog -> sent");
                     :}
-               | PROG SENT
+               | prog sent
                     {: 
-                         System.out.println("PROG -> PROG SENT");
+                         System.out.println("prog -> prog sent");
                     :}; 
-SENT                ::= ASIG 
+sent                ::= asig PYC
                     {: 
-                         System.out.println("SENT -> ASIG");
+                         System.out.println("sent -> asig");
                     :}
-                    | ITERACION 
-                    {: 
-                         System.out.println("SENT -> ITERACION");
+                    | iteracion 
+                    {:
+                         System.out.println("sent -> iteracion");
                     :}
-                    | SELECCION
-                    {: 
-                         System.out.println("SENT -> SELECCION");
-                    :}; 
-ASIG           ::= id op_asig EXPRESION
-                    {: 
-                         System.out.println("ASIG -> id op_asig EXPRESION");
-                    :}; 
-ITERACION      ::= while CONDICION  la PROG  lc 
-                    {: 
-                         System.out.println("ITERACION -> while CONDICION  la PROG  lc");
-                    :}; 
-SELECCION      ::=  if CONDICION  la PROG lc
-                    {: 
-                         System.out.println("SELECCION -> if CONDICION  la PROG lc");
+                    | dec
+                     {: 
+                         System.out.println("sent -> dec");
                     :}
-                    | if CONDICION  la PROG lc else PROG
+                    | sent_put PYC
+                     {: 
+                         System.out.println("sent -> sent_put PYC");
+                    :}
+                    | sent_get PYC
+                     {: 
+                         System.out.println("sent -> sent_get PYC");
+                    :}
+                    | seleccion
                     {: 
-                         System.out.println("SELECCION -> if CONDICION la PROG lc else PROG");
+                      System.out.println("sent -> seleccion");
+                    :}; 
+
+asig           ::= ID OP_AS expresion
+                    {: 
+                         System.out.println("asig -> ID OP_ASig expresion");
                     :};
-CONDICION      ::= COMPARACION
+
+iteracion      ::= WHILE PA condicion PC LA prog  LC
                     {: 
-                     System.out.println("CONDICION -> COMPARACION");
-                    :} 
-                    | CONDICION op_and  COMPARACION
-                    {: 
-                     System.out.println("CONDICION -> CONDICION op_and  COMPARACION");
-                    :} 
-                    | CONDICION op_or COMPARACION
-                    {: 
-                     System.out.println("CONDICION -> CONDICION op_or COMPARACION");
+                         System.out.println("iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
-COMPARACION    ::= EXPRESION COMPARADOR EXPRESION
+seleccion      ::= IF PA condicion  PC LA prog LC
                     {: 
-                     System.out.println("COMPARACION -> EXPRESION COMPARADOR EXPRESION");
+                         System.out.println("seleccion -> IF condicion LA prog LC");
+                    :}
+                    | IF PA condicion  PC LA prog LC seleccion_else  {:
+                              System.out.println("seleccion -> IF condicion LA prog LC else prog");
+                     :};
+
+seleccion_else ::= ELSE LA prog LC
+                {:
+                       System.out.println("seleccion_else -> IF condicion LA prog LC ELSE prog");
+
+                :} ;
+
+condicion      ::= comparacion
+                    {: 
+                     System.out.println("condicion -> comparacion");
+                    :} 
+                    | comparacion OP_AND  comparacion
+                    {: 
+                     System.out.println("condicion -> comparacion OP_AND  comparacion");
+                    :} 
+                    | comparacion OP_OR comparacion
+                    {: 
+                     System.out.println("condicion -> comparacion OP_OR comparacion");
+                    :}
+                    | OP_NOT comparacion
+                    {: 
+                     System.out.println("condicion -> OP_NOT comparacion");
                     :}; 
-COMPARADOR     ::= op_mayig:op_mayig 
+comparacion    ::= expresion comparador expresion
                     {: 
-                         System.out.println("COMPARADOR -> op_mayig " );
-                         System.out.println("operador:" + op_mayig );
+                     System.out.println("comparacion -> expresion comparador expresion");
+                    :}; 
+comparador     ::= OP_MAYIG:OP_MAYIG 
+                    {: 
+                         System.out.println("comparador -> OP_MAYIG " );
+                         System.out.println("operador:" + OP_MAYIG );
 		          :}
-                    | op_menig:op_menig 
+                    | OP_MENIG:OP_MENIG 
                     {: 
-                         System.out.println("COMPARADOR -> op_menig" );
-                         System.out.println("operador:" + op_menig);
+                         System.out.println("comparador -> OP_MENIG" );
+                         System.out.println("operador:" + OP_MENIG);
 		          :}
-                    | op_may:op_may 
+                    | OP_MAY:OP_MAY 
                     {: 
-                         System.out.println("COMPARADOR -> op_may" );
-                         System.out.println("operador:" + op_may );
+                         System.out.println("comparador -> OP_MAY" );
+                         System.out.println("operador:" + OP_MAY );
 		          :}
-                    | op_men:op_men
+                    | OP_MEN:OP_MEN
                     {: 
-                         System.out.println("COMPARADOR -> op_men" );
-                         System.out.println("operador:" +op_men );
+                         System.out.println("comparador -> OP_MEN" );
+                         System.out.println("operador:" +OP_MEN );
 		          :}
-                    | op_comp:op_comp
+                    | OP_COMP:OP_COMP
                     {: 
-                         System.out.println("COMPARADOR -> op_comp" );
-                         System.out.println("operador:" + op_comp);
+                         System.out.println("comparador -> OP_COMP" );
+                         System.out.println("operador:" + OP_COMP);
 		          :}
-                    | op_dist:op_dist
+                    | OP_DIST:OP_DIST
                     {: 
-                         System.out.println("COMPARADOR -> op_dist" );
-                         System.out.println("operador:" + op_dist);
+                         System.out.println("comparador -> OP_DIST" );
+                         System.out.println("operador:" + OP_DIST);
 		          :};
         
-EXPRESION      ::= EXPRESION op_sum TERMINO
+expresion      ::= expresion OP_SUM termino
                {:
-                    System.out.println("EXPRESION -> EXPRESION op_sum TERMINO");     
+                    System.out.println("expresion -> expresion OP_SUM termino");     
                :}
-               | EXPRESION op_res TERMINO
+               | expresion OP_RES termino
                {:
-                    System.out.println("EXPRESION -> EXPRESION op_res TERMINO");     
+                    System.out.println("expresion -> expresion OP_RES termino");     
                :}
-               | TERMINO
+               | termino
                {:
-                    System.out.println("EXPRESION -> TERMINO");
+                    System.out.println("expresion -> termino");
                :};
 
-TERMINO        ::=  TERMINO op_div FACTOR
+termino        ::=  termino OP_DIV factor
                {: 
-                    System.out.println("TERMINO -> TERMINO op_div FACTOR");
+                    System.out.println("termino -> termino OP_DIV factor");
 		     :}
-		     | TERMINO op_mul FACTOR 
+		     | termino OP_MUL factor 
                {: 
-                    System.out.println("TERMINO -> TERMINO op_mul FACTOR");
+                    System.out.println("termino -> termino OP_MUL factor");
 		     :}
-               | FACTOR 
+               | factor 
                {: 
-                    System.out.println("TERMINO -> FACTOR");
+                    System.out.println("termino -> factor");
+               :};
+variable       ::= CONST_STR: CONST_STR {:
+                    System.out.println("variable -> CONST_STRING");
+               :} 
+               | ID:ID {: 
+                         System.out.println("variable -> ID");
+               :}
+               | CONST_INT:CONST_INT {: 
+                         System.out.println("variable -> CONST_INT");
+               :}
+               | CONST_FLOAT:CONST_FLOAT {: 
+                         System.out.println("variable -> CONST_FLOAT");
+               :}
+                | CTE_BIN:CTE_BIN {: 
+                         System.out.println("variable -> CTE_BIN");
+               :}
+                | CTE_HEXA:CTE_HEXA {: 
+                         System.out.println("variable -> CTE_HEXA");
+               :};
+sent_put       ::= PUT variable {:
+                    System.out.println("sent_put -> PUT variable");
                :};
 
-FACTOR         ::= id:id
-               {: 
-                    System.out.println("FACTOR -> ID: " + id);
-                    System.out.println("id: " + id);
+sent_get     ::= GET ID {:
+                    System.out.println("sent_get -> GET ID");
+               :};
+
+dec           ::= DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY{:
+                    System.out.println("dec -> DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY");
+               :};    
+
+
+list_var ::= list_var COMA ID
+               {:
+                         System.out.println("list_var -> list_var COMA ID: ");
+               :};
+
+list_var ::= ID
+               {:
+                         System.out.println("list_var -> ID ");
+               :};
+               
+list_td ::= list_td COMA tipo_dato
+               {:
+                         System.out.println("list_td -> list_td COMA tipo_dato");
+               :};
+               
+list_td ::= tipo_dato
+               {:
+                         System.out.println("list_td -> TIPO DE DATO ");
+               :};
+               
+tipo_dato ::= INTEGER 
+               {:
+                         System.out.println("tipo_dato -> INTEGER");
                :}
-               | const_int:const_int 
+               | FLOAT
+               {:
+                         System.out.println("tipo_dato -> FLOAT");:}
+               | STRING
+               {:
+                         System.out.println("tipo_dato -> STRING");
+               :};
+
+list_exp       ::= list_exp COMA expresion
+                  {:
+                    System.out.println("list_exp -> list_exp COMA expresion");
+                   :}
+                | expresion
                {: 
-                    System.out.println("FACTOR -> CTE_ENTERA: " + const_int);
-		          System.out.println("constante entera: " + const_int);
+                    System.out.println("list_exp -> expresion");
+               :} ;
+factor         ::= ID:ID
+               {: 
+                    System.out.println("factor -> ID: " + ID);
+                    System.out.println("ID: " + ID);
+               :}
+               | CONST_INT:CONST_INT 
+               {: 
+                    System.out.println("factor -> CONST_INT: " + CONST_INT);
+		          System.out.println("constante entera: " + CONST_INT);
 		     :}
-               | const_float:const_float
+               | CONST_FLOAT:CONST_FLOAT
                {: 
-                    System.out.println("FACTOR -> CTE_FLOTANTE: " + const_float);
-		          System.out.println("constante flotante: " + const_float);
+                    System.out.println("factor -> CONST_FLOAT: " + CONST_FLOAT);
+		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     :}
-               | const_str:const_str
+               | CONST_STR:CONST_STR
                {: 
-                    System.out.println("FACTOR -> const_str: " + const_str);
-		          System.out.println("constante const_str: " + const_str);
+                    System.out.println("factor -> CONST_STR: " + CONST_STR);
+		          System.out.println("constante CONST_STR: " + CONST_STR);
 		     :}
-               | cte_bin:cte_bin
+               | CTE_BIN:CTE_BIN
                {: 
-                    System.out.println("FACTOR -> cte_bin: " + cte_bin);
-		          System.out.println("constante cte_bin: " + cte_bin);
+                    System.out.println("factor -> cte_bin: " + CTE_BIN);
+		          System.out.println("constante CTE_BIN: " + CTE_BIN);
 		     :}
-               | cte_hexa:cte_hexa
+               | CTE_HEXA:CTE_HEXA
                {: 
-                    System.out.println("FACTOR -> cte_hexa: " + cte_hexa);
-		          System.out.println("constante cte_hexa: " + cte_hexa);
+                    System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
+		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
 		     :}
-               | pa EXPRESION pc
+               | PA expresion PC
                {: 
-                    System.out.println("FACTOR -> pa EXPRESION pc " + cte_hexa);
+                    System.out.println("factor -> PA expresion PC");
+		     :}
+               | CONTAR PA expresion PYC CA list_exp CC PC
+               {: 
+                    System.out.println("factor -> CONTAR PA expresion PYC CA list_exp CC PC");
 		     :};  
+
+ 
