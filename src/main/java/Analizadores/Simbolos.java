@@ -1,3 +1,5 @@
+package Analizadores;
+
 public class Simbolos {
     public static final int EOF = 0;
     public static final int ERROR = 1;

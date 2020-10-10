@@ -1,16 +1,13 @@
-package Entrega1;
-import java.io.*;
+package Analizadores;
 import java_cup.runtime.*;
 
 %%      /* Directivas */
-
-%class lexico
-%standalone
-%column
-%line
+%public
+%class AnalizadorLexico
 %cupsym Simbolos
 %cup
-
+%column
+%line
 %ignorecase
 %unicode
 
@@ -72,7 +69,7 @@ CTE_HEXA        =    "0x"{DIGITO_HEXA}+
 ID 		        =	{LETRA}({LETRA}|{DIGITO})*
 
 %%
-
+<YYINITIAL> {
 {PUT} 		     {return symbol(Simbolos.PUT);}
 {GET} 		     {return symbol(Simbolos.GET);}
 {DIM} 	    	 {return symbol(Simbolos.DIM);}
@@ -113,8 +110,12 @@ ID 		        =	{LETRA}({LETRA}|{DIGITO})*
 {CTE_BINARIA}	      {return symbol(Simbolos.CTE_BINARIA);}
 {CONST_INT}				{
                             Integer constInt = Integer.parseInt(yytext());
-                            if(constInt >= 0 && constInt <= RANGO_ENTERO)
+                            if(constInt >= 0 && constInt <= RANGO_ENTERO){
+                                System.o
                                 return symbol(Simbolos.CONST_INT);
+
+                            }
+                                
                              else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de la cadena string");
                         }
@@ -138,3 +139,4 @@ ID 		        =	{LETRA}({LETRA}|{DIGITO})*
 {ID}				    {  return symbol(Simbolos.ID); }
 
 .						{   }
+}

@@ -1,20 +1,33 @@
-package Entrega1;
 
 import java_cup.runtime.*;
 
+parser code     //Codigo que se le agrega al parser
+{:
+    public void syntax_error(Symbol cur_token) {
+        String errMsg = "Syntax error " + cur_token.value.toString() + " " + cur_token.right + ":" + cur_token.left + "\n";
+        report_error(errMsg, null);
+    }
+
+    public void unrecovered_syntax_error(Symbol cur_token) throws Exception {
+        String errMsg = "Couldn't repair and continue parse " + cur_token.value.toString() + " " + cur_token.right + ":" + cur_token.left + "\n";
+        report_fatal_error(errMsg, null);
+    }
+:}
+
 //Declaracion de terminales
-terminal  eof, error, put, get, dim, as, integer,
+terminal  eof,  put, get, dim, as, integer,
           float, while, if, else, op_as, op_sum,
           op_res, op_mul, op_div, op_men, op_menig,
           op_may, op_mayig, op_dist, coma, pyc, pa,
-          pc, la, lc, ca, cc, op_and, op_or, op_comp;
+          pc, la, lc, ca, cc, op_and, op_or, op_comp, op_asig ;
 
 terminal String id, const_int, const_float,
                 const_str, cte_hexa, cte_bin;
 
 //Declaracion de no terminales
-non terminal Symbol START, PROG, SENT, SIG,
-                    EXPRESION, TERMINO, FACTOR;
+non terminal Symbol START, PROG, SENT, ASIG,
+                    EXPRESION, TERMINO, FACTOR, SELECCION, ITERACION, CONDICION,
+                    COMPARACION, COMPARADOR;
 start with START;
 
 //Reglas gramaticales
@@ -31,7 +44,7 @@ PROG           ::= SENT
                     {: 
                          System.out.println("PROG -> PROG SENT");
                     :}; 
-SENT           ::= ASIG 
+SENT                ::= ASIG 
                     {: 
                          System.out.println("SENT -> ASIG");
                     :}
@@ -47,27 +60,27 @@ ASIG           ::= id op_asig EXPRESION
                     {: 
                          System.out.println("ASIG -> id op_asig EXPRESION");
                     :}; 
-SELECCION      ::= if CONDICION  la PROG lc else PROG
-                    {: 
-                         System.out.println("SELECCION -> if CONDICION la PROG lc else PROG");
-                    :}; 
-SELECCION      ::= if CONDICION  la PROG lc
-                    {: 
-                         System.out.println("SELECCION -> if CONDICION  la PROG lc");
-                    :}; 
 ITERACION      ::= while CONDICION  la PROG  lc 
                     {: 
                          System.out.println("ITERACION -> while CONDICION  la PROG  lc");
                     :}; 
+SELECCION      ::=  if CONDICION  la PROG lc
+                    {: 
+                         System.out.println("SELECCION -> if CONDICION  la PROG lc");
+                    :}
+                    | if CONDICION  la PROG lc else PROG
+                    {: 
+                         System.out.println("SELECCION -> if CONDICION la PROG lc else PROG");
+                    :};
 CONDICION      ::= COMPARACION
                     {: 
                      System.out.println("CONDICION -> COMPARACION");
-                    :}; 
-CONDICION      ::= CONDICION op_and  COMPARACION
+                    :} 
+                    | CONDICION op_and  COMPARACION
                     {: 
                      System.out.println("CONDICION -> CONDICION op_and  COMPARACION");
-                    :}; 
-CONDICION      ::= CONDICION op_or COMPARACION
+                    :} 
+                    | CONDICION op_or COMPARACION
                     {: 
                      System.out.println("CONDICION -> CONDICION op_or COMPARACION");
                     :}; 
@@ -162,7 +175,7 @@ FACTOR         ::= id:id
                     System.out.println("FACTOR -> cte_hexa: " + cte_hexa);
 		          System.out.println("constante cte_hexa: " + cte_hexa);
 		     :}
-               | PA expresion PC
+               | pa EXPRESION pc
                {: 
                     System.out.println("FACTOR -> pa EXPRESION pc " + cte_hexa);
 		     :};  
