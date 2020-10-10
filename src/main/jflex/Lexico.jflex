@@ -1,3 +1,6 @@
+package Entrega1;
+import java.io.*;
+import java_cup.runtime.*;
 
 %%      /* Directivas */
 
@@ -106,7 +109,7 @@ ID 		        =	{LETRA}({LETRA}|{DIGITO})*
 
 
 
-{CTE_HEXA}  	 {return symbol(Simbolos.CTE_HEXA);}
+{CTE_HEXA}  	      {return symbol(Simbolos.CTE_HEXA);}
 {CTE_BINARIA}	      {return symbol(Simbolos.CTE_BINARIA);}
 {CONST_INT}				{
                             Integer constInt = Integer.parseInt(yytext());

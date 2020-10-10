@@ -1,3 +1,5 @@
+package Entrega1;
+
 import java_cup.runtime.*;
 
 //Declaracion de terminales
