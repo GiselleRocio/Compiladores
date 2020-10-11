@@ -1029,7 +1029,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_HEXAright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_HEXA = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
-                    tablaDeSimbolos.agregarEnTabla("_"+CONST_HEXA, null, CONST_FLOAT, null);
+                    tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, CTE_HEXA, null);
                     System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
 		     
