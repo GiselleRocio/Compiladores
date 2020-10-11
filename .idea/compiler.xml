@@ -10,5 +10,9 @@
         <module name="Compiladores" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="14" />
+  </component>
+  <component name="JavacSettings">
+    <option name="PREFER_TARGET_JDK_COMPILER" value="false" />
   </component>
 </project>

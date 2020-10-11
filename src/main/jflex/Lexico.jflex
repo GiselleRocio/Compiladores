@@ -77,7 +77,9 @@ COMENTARIO      =   "*-".*"-*"
 
 %%
 <YYINITIAL> {
-{PUT} 		     {return symbol(Simbolos.PUT);}
+{PUT} 		     {
+                    
+                    return symbol(Simbolos.PUT);}
 {GET} 		     {return symbol(Simbolos.GET);}
 {DIM} 	    	 {return symbol(Simbolos.DIM);}
 {AS} 		     {return symbol(Simbolos.AS);}

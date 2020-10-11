@@ -6,6 +6,7 @@
 package Analizadores;
 
 import java_cup.runtime.*;
+import Tabla.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -41,12 +42,12 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\002\015\003\000\002\015\003\000\002\015\003\000\002" +
     "\015\003\000\002\006\005\000\002\006\005\000\002\006" +
     "\003\000\002\007\005\000\002\007\005\000\002\007\003" +
-    "\000\002\026\003\000\002\026\003\000\002\026\003\000" +
-    "\002\026\003\000\002\026\003\000\002\026\003\000\002" +
-    "\021\004\000\002\022\004\000\002\020\012\000\002\023" +
-    "\005\000\002\023\003\000\002\024\005\000\002\024\003" +
     "\000\002\025\003\000\002\025\003\000\002\025\003\000" +
-    "\002\027\005\000\002\027\003\000\002\010\003\000\002" +
+    "\002\025\003\000\002\025\003\000\002\025\003\000\002" +
+    "\020\004\000\002\021\004\000\002\017\012\000\002\022" +
+    "\005\000\002\022\003\000\002\023\005\000\002\023\003" +
+    "\000\002\024\003\000\002\024\003\000\002\024\003\000" +
+    "\002\026\005\000\002\026\003\000\002\010\003\000\002" +
     "\010\003\000\002\010\003\000\002\010\003\000\002\010" +
     "\003\000\002\010\003\000\002\010\005\000\002\010\012" +
     "" });
@@ -199,11 +200,11 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
     "\000\156\000\024\002\011\003\012\004\020\005\015\011" +
-    "\007\012\016\020\010\021\014\022\006\001\001\000\002" +
-    "\001\001\000\002\001\001\000\004\026\126\001\001\000" +
+    "\007\012\016\017\010\020\014\021\006\001\001\000\002" +
+    "\001\001\000\002\001\001\000\004\025\126\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\020\004\020\005\075\011\007\012\016\020" +
-    "\010\021\014\022\006\001\001\000\002\001\001\000\002" +
+    "\001\001\000\020\004\020\005\075\011\007\012\016\017" +
+    "\010\020\014\021\006\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\010\006\032\007\027\010\035\001" +
@@ -216,7 +217,7 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\004\010\045\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\010\006\053\007\027\010\035\001\001\000\002\001\001" +
-    "\000\002\001\001\000\012\006\057\007\027\010\035\027" +
+    "\000\002\001\001\000\012\006\057\007\027\010\035\026" +
     "\056\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\010\006\062\007\027\010\035\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\014" +
@@ -224,13 +225,13 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\012\006\070\007\027\010\035\014\120\001\001\000\002" +
     "\001\001\000\004\015\106\001\001\000\002\001\001\000" +
     "\002\001\001\000\022\003\074\004\020\005\015\011\007" +
-    "\012\016\020\010\021\014\022\006\001\001\000\020\004" +
-    "\020\005\075\011\007\012\016\020\010\021\014\022\006" +
+    "\012\016\017\010\020\014\021\006\001\001\000\020\004" +
+    "\020\005\075\011\007\012\016\017\010\020\014\021\006" +
     "\001\001\000\002\001\001\000\004\016\100\001\001\000" +
     "\002\001\001\000\002\001\001\000\022\003\102\004\020" +
-    "\005\015\011\007\012\016\020\010\021\014\022\006\001" +
-    "\001\000\020\004\020\005\075\011\007\012\016\020\010" +
-    "\021\014\022\006\001\001\000\002\001\001\000\002\001" +
+    "\005\015\011\007\012\016\017\010\020\014\021\006\001" +
+    "\001\000\020\004\020\005\075\011\007\012\016\017\010" +
+    "\020\014\021\006\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\010\006\113\007\027\010\035" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\012\006\070" +
@@ -241,14 +242,14 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\014\006\070\007\027\010\035\013\133" +
     "\014\067\001\001\000\002\001\001\000\002\001\001\000" +
-    "\022\003\136\004\020\005\015\011\007\012\016\020\010" +
-    "\021\014\022\006\001\001\000\020\004\020\005\075\011" +
-    "\007\012\016\020\010\021\014\022\006\001\001\000\002" +
-    "\001\001\000\004\023\142\001\001\000\002\001\001\000" +
+    "\022\003\136\004\020\005\015\011\007\012\016\017\010" +
+    "\020\014\021\006\001\001\000\020\004\020\005\075\011" +
+    "\007\012\016\017\010\020\014\021\006\001\001\000\002" +
+    "\001\001\000\004\022\142\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\006\024\153\025\151\001\001\000\002\001" +
+    "\001\001\000\006\023\153\024\151\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\025\156\001\001\000\002\001" +
+    "\000\002\001\001\000\004\024\156\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
@@ -302,6 +303,11 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$AnalizadorSintactico$actions {
+
+
+    public TablaDeSimbolos tablaDeSimbolos = new TablaDeSimbolos();
+
+
   private final AnalizadorSintactico parser;
 
   /** Constructor */
@@ -341,8 +347,8 @@ class CUP$AnalizadorSintactico$actions {
           case 1: // inicio ::= prog 
             {
               Symbol RESULT =null;
-		 
-                         System.out.println("start -> prog");
+		  tablaDeSimbolos.guardarTabla();
+                         System.out.println("COMPILACION EXITOSA!");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("inicio",0, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -463,7 +469,7 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		 
-                         System.out.println("seleccion -> IF condicion LA prog LC else prog");
+                         System.out.println("seleccion -> IF condicion LA prog LC");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("seleccion",7, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-6)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -711,9 +717,10 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_STRright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_STR = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_STR, null, CONST_STR, null);
                     System.out.println("variable -> CONST_STRING");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -725,9 +732,10 @@ class CUP$AnalizadorSintactico$actions {
 		int IDright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String ID = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                          tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                          System.out.println("variable -> ID");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -739,9 +747,10 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_INTright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_INT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                          System.out.println("variable -> CONST_INT");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -753,9 +762,10 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_FLOATright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_FLOAT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                          tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                          System.out.println("variable -> CONST_FLOAT");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -767,9 +777,10 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_BINright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_BIN = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, CTE_BIN, null);
                          System.out.println("variable -> CTE_BIN");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -781,9 +792,10 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_HEXAright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_HEXA = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                         tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, CTE_HEXA, null);
                          System.out.println("variable -> CTE_HEXA");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -794,7 +806,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                     System.out.println("sent_put -> PUT variable");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("sent_put",15, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("sent_put",14, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -802,10 +814,14 @@ class CUP$AnalizadorSintactico$actions {
           case 39: // sent_get ::= GET ID 
             {
               Symbol RESULT =null;
+		int IDleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int IDright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		String ID = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+                    tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                     System.out.println("sent_get -> GET ID");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("sent_get",16, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("sent_get",15, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -816,7 +832,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                     System.out.println("dec -> DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("dec",14, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-7)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("dec",13, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-7)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -824,10 +840,14 @@ class CUP$AnalizadorSintactico$actions {
           case 41: // list_var ::= list_var COMA ID 
             {
               Symbol RESULT =null;
+		int IDleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int IDright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		String ID = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+                         tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                          System.out.println("list_var -> list_var COMA ID: ");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_var",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_var",16, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -835,10 +855,14 @@ class CUP$AnalizadorSintactico$actions {
           case 42: // list_var ::= ID 
             {
               Symbol RESULT =null;
+		int IDleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
+		int IDright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
+		String ID = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
-                         System.out.println("list_var -> ID ");
+                     tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
+                     System.out.println("list_var -> ID ");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_var",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_var",16, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -849,7 +873,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          System.out.println("list_td -> list_td COMA tipo_dato");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_td",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_td",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -860,7 +884,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          System.out.println("list_td -> TIPO DE DATO ");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_td",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_td",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -871,7 +895,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          System.out.println("tipo_dato -> INTEGER");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -881,7 +905,7 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =null;
 		
                          System.out.println("tipo_dato -> FLOAT");
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -892,7 +916,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          System.out.println("tipo_dato -> STRING");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",19, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",18, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -903,7 +927,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                     System.out.println("list_exp -> list_exp COMA expresion");
                    
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_exp",21, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_exp",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -914,7 +938,7 @@ class CUP$AnalizadorSintactico$actions {
 		 
                     System.out.println("list_exp -> expresion");
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_exp",21, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_exp",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
@@ -926,6 +950,7 @@ class CUP$AnalizadorSintactico$actions {
 		int IDright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String ID = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                     tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                     System.out.println("factor -> ID: " + ID);
                     System.out.println("ID: " + ID);
                
@@ -941,6 +966,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_INTright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_INT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                     System.out.println("factor -> CONST_INT: " + CONST_INT);
 		          System.out.println("constante entera: " + CONST_INT);
 		     
@@ -955,7 +981,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_FLOATleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
 		int CONST_FLOATright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_FLOAT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
-		 
+		   tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                     System.out.println("factor -> CONST_FLOAT: " + CONST_FLOAT);
 		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     
@@ -971,6 +997,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_STRright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_STR = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_STR, null, CONST_STR, null);
                     System.out.println("factor -> CONST_STR: " + CONST_STR);
 		          System.out.println("constante CONST_STR: " + CONST_STR);
 		     
@@ -986,6 +1013,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_BINright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_BIN = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                     tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, CTE_BIN, null);
                     System.out.println("factor -> cte_bin: " + CTE_BIN);
 		          System.out.println("constante CTE_BIN: " + CTE_BIN);
 		     
@@ -1001,6 +1029,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_HEXAright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_HEXA = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_HEXA, null, CONST_FLOAT, null);
                     System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
 		     

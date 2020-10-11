@@ -1,5 +1,16 @@
 
+
+package Analizadores;
 import java_cup.runtime.*;
+import Tabla.*;
+
+// ---------> Codigo para las acciones gramaticales
+action code
+{:
+    public TablaDeSimbolos tablaDeSimbolos = new TablaDeSimbolos();
+
+:}
+
 
 parser code     //Codigo que se le agrega al parser
 {:
@@ -28,16 +39,16 @@ terminal String ID, CONST_INT, CONST_FLOAT, CONST_STR, CTE_HEXA, CTE_BIN;
 non terminal Symbol inicio, prog, asig, sent, 
                     expresion, termino, factor, seleccion,
                     iteracion, condicion,comparacion, comparador, 
-                    seleccion_else, vacio, dec, sent_put, sent_get,
+                    seleccion_else, dec, sent_put, sent_get,
                      list_var, list_td, tipo_dato, variable, list_exp;
 
 start with inicio;
 
 //Reglas gramaticales
 inicio          ::= prog
-                    {: 
-                         System.out.println("start -> prog");
-                    :};   /// Esto es start -> programa
+                    {:  tablaDeSimbolos.guardarTabla();
+                         System.out.println("COMPILACION EXITOSA!");
+                    :};  
 
 prog           ::= sent
                     {: 
@@ -172,28 +183,35 @@ termino        ::=  termino OP_DIV factor
                     System.out.println("termino -> factor");
                :};
 variable       ::= CONST_STR: CONST_STR {:
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_STR, null, CONST_STR, null);
                     System.out.println("variable -> CONST_STRING");
                :} 
                | ID:ID {: 
+                          tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                          System.out.println("variable -> ID");
                :}
                | CONST_INT:CONST_INT {: 
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                          System.out.println("variable -> CONST_INT");
                :}
                | CONST_FLOAT:CONST_FLOAT {: 
+                          tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                          System.out.println("variable -> CONST_FLOAT");
                :}
                 | CTE_BIN:CTE_BIN {: 
+                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, CTE_BIN, null);
                          System.out.println("variable -> CTE_BIN");
                :}
                 | CTE_HEXA:CTE_HEXA {: 
+                         tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, CTE_HEXA, null);
                          System.out.println("variable -> CTE_HEXA");
                :};
 sent_put       ::= PUT variable {:
                     System.out.println("sent_put -> PUT variable");
                :};
 
-sent_get     ::= GET ID {:
+sent_get     ::= GET ID:ID {:
+                    tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                     System.out.println("sent_get -> GET ID");
                :};
 
@@ -202,14 +220,16 @@ dec           ::= DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY{:
                :};    
 
 
-list_var ::= list_var COMA ID
+list_var ::= list_var COMA ID:ID
                {:
+                         tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                          System.out.println("list_var -> list_var COMA ID: ");
                :};
 
-list_var ::= ID
+list_var ::= ID:ID
                {:
-                         System.out.println("list_var -> ID ");
+                     tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
+                     System.out.println("list_var -> ID ");
                :};
                
 list_td ::= list_td COMA tipo_dato
@@ -244,31 +264,36 @@ list_exp       ::= list_exp COMA expresion
                :} ;
 factor         ::= ID:ID
                {: 
+                     tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                     System.out.println("factor -> ID: " + ID);
                     System.out.println("ID: " + ID);
                :}
                | CONST_INT:CONST_INT 
                {: 
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                     System.out.println("factor -> CONST_INT: " + CONST_INT);
 		          System.out.println("constante entera: " + CONST_INT);
 		     :}
                | CONST_FLOAT:CONST_FLOAT
-               {: 
+               {:   tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                     System.out.println("factor -> CONST_FLOAT: " + CONST_FLOAT);
 		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     :}
                | CONST_STR:CONST_STR
                {: 
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_STR, null, CONST_STR, null);
                     System.out.println("factor -> CONST_STR: " + CONST_STR);
 		          System.out.println("constante CONST_STR: " + CONST_STR);
 		     :}
                | CTE_BIN:CTE_BIN
                {: 
+                     tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, CTE_BIN, null);
                     System.out.println("factor -> cte_bin: " + CTE_BIN);
 		          System.out.println("constante CTE_BIN: " + CTE_BIN);
 		     :}
                | CTE_HEXA:CTE_HEXA
                {: 
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_HEXA, null, CONST_FLOAT, null);
                     System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
 		     :}
