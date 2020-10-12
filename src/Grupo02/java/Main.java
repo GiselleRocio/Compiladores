@@ -7,11 +7,12 @@ import java.io.FileReader;
 public class Main {
     public static void main(String args[])
     {
-        String fileName = "Prueba.txt";
+        String fileName = "./src/Grupo02/prueba.txt";
         try {
-            @SuppressWarnings("deprecation") AnalizadorSintactico sintactico = new AnalizadorSintactico(new AnalizadorLexico(new FileReader(fileName)));
+            @SuppressWarnings("deprecation") 
+            AnalizadorSintactico sintactico = new AnalizadorSintactico(new AnalizadorLexico(new FileReader(fileName)));
             sintactico.parse();
-            System.out.println("CorriÃ³ " + fileName);
+            System.out.println("Corrió " + fileName);
         } catch (FileNotFoundException e) {
             System.err.println("El archivo " + fileName + " no existe");
             e.printStackTrace();

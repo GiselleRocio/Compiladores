@@ -29,7 +29,7 @@ public class TablaDeSimbolos {
 
 
     public void guardarTabla() {
-        try (BufferedWriter br = new BufferedWriter(new FileWriter("ts.txt"))) {
+        try (BufferedWriter br = new BufferedWriter(new FileWriter("./src/Grupo02/ts.txt"))) {
 
             br.write(String.format("%-30s|%-30s|%-30s|%-30s\n", "NOMBRE", "TIPODATO", "VALOR", "LONGITUD"));
             listaDeSimbolos.forEach(simbolo -> {
