@@ -12,7 +12,7 @@ public class Main {
             @SuppressWarnings("deprecation") 
             AnalizadorSintactico sintactico = new AnalizadorSintactico(new AnalizadorLexico(new FileReader(fileName)));
             sintactico.parse();
-            System.out.println("Corrió " + fileName);
+            System.out.println("CorriÃ³ " + fileName);
         } catch (FileNotFoundException e) {
             System.err.println("El archivo " + fileName + " no existe");
             e.printStackTrace();
