@@ -15,9 +15,8 @@ PUT suma;
 
 if (actual > 0b10 and actual <> 0){
     PUT "actual es mayor ";
-}else
- {
- if (actual < 0b111010){
- PUT "no es mayor que 2";
- }
+}else {
+    if (actual < 0b111010){
+         PUT "no es mayor que 2";
+     }
  }

@@ -47,6 +47,7 @@ start with inicio;
 //Reglas gramaticales
 inicio          ::= prog
                     {:  tablaDeSimbolos.guardarTabla();
+                         System.out.println("inicio -> prog");
                          System.out.println("COMPILACION EXITOSA!");
                     :};  
 
