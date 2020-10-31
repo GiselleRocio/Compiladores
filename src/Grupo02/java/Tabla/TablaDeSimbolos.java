@@ -20,13 +20,12 @@ public class TablaDeSimbolos {
     public void agregarEnTabla(String nombre, String tipo, String valor, Integer longitud) {
         if(!estaEnTabla(nombre)){
             listaDeSimbolos.add(new Simbolo(nombre, tipo, valor, longitud));
-        }
+        } 
     }
 
     public Boolean estaEnTabla(String nombre) {
         return listaDeSimbolos.stream().anyMatch(simbolo -> simbolo.getNombre().equals(nombre));
     }
-
 
     public void guardarTabla() {
         try (BufferedWriter br = new BufferedWriter(new FileWriter("./src/Grupo02/ts.txt"))) {
@@ -44,6 +43,25 @@ public class TablaDeSimbolos {
         } catch (Exception e) {
             LOGGER.severe("Ocurrio un error al guardar el archivo");
             e.printStackTrace();
+        }
+    }
+
+    public void agregarVariables(Queue<String> colaNombre, Queue<String> colaTipoDato) {
+        String nombre;
+        String tipoDato;
+
+        if(colaNombre.size() != colaTipoDato.size()) {
+            throw new Error("Error de sintaxis: La cantidad de variables declaradas no coincide con la cantidad de tipos de datos declarados."); 
+        }
+
+        while(colaNombre.peek() != null) {
+            nombre = colaNombre.poll();
+            tipoDato = colaTipoDato.poll();
+            if(!estaEnTabla(nombre)) {
+                agregarEnTabla("_"+nombre, tipoDato, nombre, null);
+            } else {
+                throw new Error("Error de sintaxis: '"+nombre+"' ya esta declarada."); 
+            }
         }
     }
 }

@@ -12,9 +12,8 @@ import java_cup.runtime.*;
 %unicode
 
 %{
-    int RANGO_ENTERO = 65535;
+    int RANGO_ENTERO = 65536;
     private Symbol symbol(int type) {
-          //System.out.println("[LEX] TOKEN < " + Simbolos.terminalNames[type] + " > : " + yytext());
           return new Symbol(type, yyline, yycolumn, yytext());
     }
     private Symbol symbol(int type, Object value) {
@@ -122,7 +121,7 @@ COMENTARIO      =   "*-".*"-*"
 {CTE_BIN}	      {return symbol(Simbolos.CTE_BIN);}
 {CONST_INT}				{
                             Integer constInt = Integer.parseInt(yytext());
-                            if(constInt >= 0 && constInt <= RANGO_ENTERO){
+                            if(constInt <= RANGO_ENTERO){
                                 return symbol(Simbolos.CONST_INT);
 
                             }
@@ -139,7 +138,7 @@ COMENTARIO      =   "*-".*"-*"
                         }
 {CONST_FLOAT}	        {
                             Double constFloat = Double.parseDouble(yytext());
-                            if( constFloat >= 0 && constFloat <= 2147483648L)
+                            if(constFloat <= 2147483648L)
                                 return symbol(Simbolos.CONST_FLOAT);
                             else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de los flotantes");
@@ -158,5 +157,5 @@ COMENTARIO      =   "*-".*"-*"
 //--------> Errores Lexicos
 .                   {
                         System.out.println("Error Léxico "+ yytext()+" Linea "+yyline+" Columna "+yycolumn);
-                        throw new Error("errorrrrrrrrrrrrrrrrrrrr");
+                        throw new Error("Error lexico");
                     }
