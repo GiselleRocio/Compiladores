@@ -923,11 +923,6 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de los flotantes");
             }
             // fall through
-                                return symbol(Simbolos.CONST_FLOAT);
-                            else
-                                throw new Error("La constante [" + yytext() + "] esta fuera del limite de los flotantes");
-            }
-            // fall through
           case 70: break;
           case 29:
             { return symbol(Simbolos.CTE_BIN);

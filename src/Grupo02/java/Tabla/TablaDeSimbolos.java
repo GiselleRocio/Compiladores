@@ -3,9 +3,11 @@ package Tabla;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.Queue;
 
 public class TablaDeSimbolos {
 
@@ -27,7 +29,10 @@ public class TablaDeSimbolos {
         return listaDeSimbolos.stream().anyMatch(simbolo -> simbolo.getNombre().equals(nombre));
     }
 
-    public void guardarTabla() {
+    public void guardarTabla(ArrayList<String> polaca) {
+
+        System.out.println("polaca: "+ polaca);
+
         try (BufferedWriter br = new BufferedWriter(new FileWriter("./src/Grupo02/ts.txt"))) {
 
             br.write(String.format("%-30s|%-30s|%-30s|%-30s\n", "NOMBRE", "TIPODATO", "VALOR", "LONGITUD"));
