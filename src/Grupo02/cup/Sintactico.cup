@@ -50,7 +50,7 @@ terminal String ID, CONST_INT, CONST_FLOAT, CONST_STR, CTE_HEXA, CTE_BIN;
 
 
 //Declaracion de no terminales
-non terminal Symbol inicio, prog, asig, sent, 
+non terminal Symbol inicio, prog, asig, sent, vacio, 
                     expresion, termino, factor, seleccion,
                     iteracion, condicion,comparacion, comparador, 
                     seleccion_else, dec, sent_put, sent_get,
@@ -112,17 +112,12 @@ iteracion      ::= WHILE PA condicion PC LA prog  LC
                          insertarEnPolaca("ET");
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
-seleccion      ::= IF PA condicion  PC LA prog LC
+seleccion      ::= IF PA condicion  PC LA prog LC seleccion_else
                     {: 
                          //pila.pop(); //desapilar tope de la pila
                          //escribir_en_celda(); //En la celda X, se escribe el n° de celda actual
                          System.out.println("R12: seleccion -> IF condicion LA prog LC");
-                         RESULT = new Symbol(-1);
-                    :}
-                    | IF PA condicion  PC LA prog  LC seleccion_else  {:
-                              System.out.println("R13: seleccion -> IF condicion LA prog LC else prog");
-                              RESULT = new Symbol(-1);
-                     :};
+                    :};
 
 seleccion_else ::= ELSE LA prog LC
                 {:
@@ -131,7 +126,17 @@ seleccion_else ::= ELSE LA prog LC
                          
                          System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
 
-                :} ;
+                :} 
+                | 
+                vacio 
+                {: 
+                         System.out.println("If sin else"); 
+                :};
+                
+vacio          ::= {: 
+                    System.out.println("If sin else"); 
+                      RESULT = new Symbol(-1); 
+               :};
 
 condicion      ::= comparacion
                     {: 
@@ -271,10 +276,6 @@ sent_get     ::= GET ID:ID {:
                :};
 
 dec           ::= DIM:DIM OP_MEN:OP_MEN list_var OP_MAY:OP_MAY AS:AS OP_MEN list_td OP_MAY {:
-                    insertarEnPolaca(DIM);
-                    insertarEnPolaca(OP_MEN);
-                    insertarEnPolaca(OP_MAY);
-                    insertarEnPolaca(AS);
                     tablaDeSimbolos.agregarVariables(colaNombres, colaTipoDato);
                     System.out.println("dec -> DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY");
                :};    
