@@ -330,7 +330,11 @@ class CUP$AnalizadorSintactico$actions {
      }
 
      public void insertarEnPolaca(String contenido, Integer lugar){
-          polaca.add(lugar , contenido);
+          polaca.set(lugar , contenido);
+     }
+
+     public void avanzar() {
+          polaca.add(" ");
      }
 
 
@@ -377,6 +381,7 @@ class CUP$AnalizadorSintactico$actions {
                          System.out.println("R1: inicio -> prog");
                          System.out.println("COMPILACION EXITOSA!");
                          System.out.println(polaca);
+                         System.out.println(polaca.size());
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("inicio",0, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -397,8 +402,7 @@ class CUP$AnalizadorSintactico$actions {
           case 3: // prog ::= prog sent 
             {
               Symbol RESULT =null;
-		 
-                         System.out.println(polaca);
+		
                          System.out.println("R3: prog -> prog sent");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("prog",1, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -500,8 +504,6 @@ class CUP$AnalizadorSintactico$actions {
 
                          pila.push(polaca.size());
                          insertarEnPolaca("ET");
-                         System.out.println("Despues del while");
-                         System.out.println(pila);
                          RESULT = new Symbol(-1); 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$0",22, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -528,14 +530,14 @@ class CUP$AnalizadorSintactico$actions {
 
                          insertarEnPolaca("BI");
                          if(hayDobleComparacion != 0){
-                             insertarEnPolaca(String.valueOf(polaca.size() + 3), pila.pop() );
-                             insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                             insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                             insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
                               hayDobleComparacion--; 
                          } else {
-                         insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                         insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
                          }
 
-                        insertarEnPolaca(String.valueOf(pila.pop()), polaca.size() );
+                        insertarEnPolaca(String.valueOf(pila.pop()));
 
 
                          RESULT = new Symbol(-1); 
@@ -574,12 +576,13 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =null;
 
                          insertarEnPolaca("BI");
-                          insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                          insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
                           if(hayDobleComparacion != 0){
-                               insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                               insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
                                hayDobleComparacion--; 
                           }
                          pila.push(polaca.size() );
+                         avanzar();
                          RESULT = new Symbol(-1); 
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$3",25, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -593,7 +596,7 @@ class CUP$AnalizadorSintactico$actions {
               // propagate RESULT from NT$3
                 RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
 		
-                         insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                         insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                          System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
 
                 
@@ -607,11 +610,11 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =null;
 		 
                 if(hayDobleComparacion != 0){
-                  insertarEnPolaca(String.valueOf(polaca.size()+2), pila.pop() );
-                  insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                  insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                  insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                     hayDobleComparacion--; 
                 } else {
-                   insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                   insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
 
                 }
                    System.out.println("If sin else"); 
@@ -637,7 +640,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		 
-                        
                          System.out.println("R15: condicion -> comparacion");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("condicion",10, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -690,6 +692,7 @@ class CUP$AnalizadorSintactico$actions {
                         insertarEnPolaca("CMP");
                          insertarEnPolaca(comparadorString);
                          pila.push(polaca.size());
+                         avanzar();
                           System.out.println("R19: comparacion -> expresion comparador expresion");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("comparacion",11, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);

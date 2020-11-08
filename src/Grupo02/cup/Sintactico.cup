@@ -69,6 +69,7 @@ inicio          ::= prog
                          System.out.println("R1: inicio -> prog");
                          System.out.println("COMPILACION EXITOSA!");
                          System.out.println(polaca);
+                         System.out.println(polaca.size());
                     :};  
 
 prog           ::= sent
@@ -76,8 +77,7 @@ prog           ::= sent
                          System.out.println("R2: prog -> sent");
                     :}
                | prog sent
-                    {: 
-                         System.out.println(polaca);
+                    {:
                          System.out.println("R3: prog -> prog sent");
                     :}; 
 sent                ::= asig PYC:PYC
@@ -115,8 +115,6 @@ asig           ::= ID:ID OP_AS:OP_AS expresion
 iteracion      ::= WHILE {:
                          pila.push(polaca.size());
                          insertarEnPolaca("ET");
-                         System.out.println("Despues del while");
-                         System.out.println(pila);
                          RESULT = new Symbol(-1); 
                     :}PA condicion {:
                          System.out.println("Despues de la condicion");
@@ -125,14 +123,14 @@ iteracion      ::= WHILE {:
                     :}PC LA prog {:
                          insertarEnPolaca("BI");
                          if(hayDobleComparacion != 0){
-                             insertarEnPolaca(String.valueOf(polaca.size() + 3), pila.pop() );
-                             insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                             insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                             insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
                               hayDobleComparacion--; 
                          } else {
-                         insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                         insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
                          }
 
-                        insertarEnPolaca(String.valueOf(pila.pop()), polaca.size() );
+                        insertarEnPolaca(String.valueOf(pila.pop()));
 
 
                          RESULT = new Symbol(-1); 
@@ -148,16 +146,17 @@ seleccion      ::= IF  PA condicion PC LA prog LC seleccion_else
 
 seleccion_else ::= ELSE {:
                          insertarEnPolaca("BI");
-                          insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                          insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
                           if(hayDobleComparacion != 0){
-                               insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                               insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
                                hayDobleComparacion--; 
                           }
                          pila.push(polaca.size() );
+                         avanzar();
                          RESULT = new Symbol(-1); 
                :} LA prog LC
                 {:
-                         insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                         insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                          System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
 
                 :} 
@@ -165,11 +164,11 @@ seleccion_else ::= ELSE {:
                 vacio 
                 {: 
                 if(hayDobleComparacion != 0){
-                  insertarEnPolaca(String.valueOf(polaca.size()+2), pila.pop() );
-                  insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                  insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                  insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                     hayDobleComparacion--; 
                 } else {
-                   insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                   insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
 
                 }
                    System.out.println("If sin else"); 
@@ -183,7 +182,6 @@ vacio          ::= {:
 
 condicion      ::= comparacion
                     {: 
-                        
                          System.out.println("R15: condicion -> comparacion");
                     :}
                     | comparacion OP_AND  comparacion
@@ -208,6 +206,7 @@ comparacion    ::= expresion comparador expresion
                         insertarEnPolaca("CMP");
                          insertarEnPolaca(comparadorString);
                          pila.push(polaca.size());
+                         avanzar();
                           System.out.println("R19: comparacion -> expresion comparador expresion");
                     :}; 
 
