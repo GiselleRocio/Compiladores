@@ -17,8 +17,42 @@ action code
      public ArrayList<String> polaca = new ArrayList<String>();
      public String comparadorString = "";
      public int hayDobleComparacion= 0;
+
+     public int contador = 0;
+     public int constanteAContar = 0;  
+
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
+     }
+
+     public String obtenerContrario(int posi){
+          String original = polaca.get(posi);
+          String contrario = ""; 
+          switch(original){
+               case "BLT":
+                    contrario= "BGE";
+               break;
+               case "BGE":
+                    contrario= "BLT";
+               break;
+               case "BLE":
+                    contrario= "BGT";
+               break;
+               case "BGT":
+                    contrario= "BLE";
+               break;
+               case "BEQ":
+                    contrario= "BNE";
+               break;
+               case "BNE":
+                    contrario= "BEQ";
+               break;
+               default:
+                    contrario= " ERROR ";
+               break;
+
+          }
+          return contrario; 
      }
 
      public void insertarEnPolaca(String contenido, Integer lugar){
@@ -60,7 +94,7 @@ non terminal Symbol inicio, prog, asig, sent, vacio,
                     expresion, termino, factor, seleccion,
                     iteracion, condicion,comparacion, comparador, 
                     seleccion_else, dec, sent_put, sent_get,
-                     list_var, list_td, tipo_dato, variable, list_exp;
+                    list_var, list_td, tipo_dato, variable, list_constantes, constantes;
 
 start with inicio;
 //Reglas gramaticales
@@ -190,15 +224,24 @@ condicion      ::= comparacion
                         insertarEnPolaca("AND");
                          System.out.println("R16: condicion -> comparacion OP_AND  comparacion");
                     :} 
-                    | comparacion OP_OR comparacion
+                    | comparacion OP_OR {:
+                      //   String contrario = obtenerContrario(polaca.size()-2);
+                         insertarEnPolaca("contrario", polaca.size() - 2);
+                         RESULT = new Symbol(-1); 
+
+                    :} comparacion
                     {: 
                          hayDobleComparacion++; 
-                         insertarEnPolaca("OR");
+                        // String contrario = obtenerContrario(polaca.size()-2);
+                         insertarEnPolaca("contrario", polaca.size() - 2);
+                         insertarEnPolaca("AND (que es un or)");
                          System.out.println("R17: condicion -> comparacion OP_OR comparacion");
                     :}
                     | OP_NOT comparacion
                     {: 
-                         insertarEnPolaca("NOT");
+                         String contrario = obtenerContrario(polaca.size()-2);
+                         insertarEnPolaca(contrario, polaca.size() - 2);
+                        // insertarEnPolaca("NOT");
                           System.out.println("R18: condicion -> OP_NOT comparacion");
                     :}; 
 comparacion    ::= expresion comparador expresion
@@ -362,14 +405,7 @@ tipo_dato ::= INTEGER:INTEGER
                          System.out.println("tipo_dato -> STRING");
                :};
 
-list_exp       ::= list_exp COMA expresion
-               {:
-                    System.out.println("list_exp -> list_exp COMA expresion");
-               :}
-                | expresion
-               {: 
-                    System.out.println("list_exp -> expresion");
-               :} ;
+
 factor         ::= ID:ID
                {: 
                     insertarEnPolaca(ID);
@@ -420,10 +456,34 @@ factor         ::= ID:ID
                {:
                     System.out.println("factor -> PA expresion PC");
 		     :}
-               | CONTAR:CONTAR PA:PA expresion PYC:PYC CA:CA list_exp CC:CC PC:PC
-               {:
-                     
+               | CONTAR PA expresion {:
+                   insertarEnPolaca("@constanteAContar");
+                   insertarEnPolaca(":");
+               :} PYC CA list_constantes CC PC
+               {:                    
                     System.out.println("factor -> CONTAR PA expresion PYC CA list_exp CC PC");
 		     :};  
 
- 
+ list_constantes  ::= list_constantes COMA constantes
+               {:
+                    System.out.println("list_constantes -> list_constantes COMA constantes");
+               :}
+                | constantes
+               {: 
+                    if(){
+                    contador++;
+                    insertarEnPolaca("@contador");
+                    insertarEnPolaca("1");
+                    insertarEnPolaca("+");
+                    }
+                    System.out.println("list_constantes -> constantes");
+               :} ;
+constantes     ::= CONST_INT {:
+                    
+                    :} | CONST_FLOAT {:
+                    
+                    :} | CTE_BIN {:
+                    
+                    :} | CTE_HEXA {:
+                    
+                    :};
