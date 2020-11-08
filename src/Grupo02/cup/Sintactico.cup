@@ -13,16 +13,22 @@ action code
      public TablaDeSimbolos tablaDeSimbolos = new TablaDeSimbolos();
      public Queue<String> colaNombres = new LinkedList();
      public Queue<String> colaTipoDato = new LinkedList(); 
-     public Stack pila = new Stack();
+     public Stack<Integer> pila = new Stack<Integer>();
      public ArrayList<String> polaca = new ArrayList<String>();
-
+     public String comparadorString = "";
+     public int hayDobleComparacion= 0;
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
      }
 
-     public escribir_en_celda(){
-
+     public void insertarEnPolaca(String contenido, Integer lugar){
+          polaca.set(lugar , contenido);
      }
+
+     public void avanzar() {
+          polaca.add(" ");
+     }
+
 :}
 
 
@@ -59,9 +65,10 @@ non terminal Symbol inicio, prog, asig, sent, vacio,
 start with inicio;
 //Reglas gramaticales
 inicio          ::= prog
-                    {:  tablaDeSimbolos.guardarTabla(polaca);
+                    {:  tablaDeSimbolos.guardarTabla();
                          System.out.println("R1: inicio -> prog");
                          System.out.println("COMPILACION EXITOSA!");
+                         System.out.println(polaca);
                     :};  
 
 prog           ::= sent
@@ -70,11 +77,11 @@ prog           ::= sent
                     :}
                | prog sent
                     {: 
+                         System.out.println(polaca);
                          System.out.println("R3: prog -> prog sent");
                     :}; 
 sent                ::= asig PYC:PYC
                     {: 
-                         insertarEnPolaca(PYC);
                          System.out.println("R4: sent -> asig");
                     :}
                     | iteracion 
@@ -85,14 +92,12 @@ sent                ::= asig PYC:PYC
                      {: 
                          System.out.println("R6: sent -> dec");
                     :}
-                    | sent_put PYC:PYC
+                    | sent_put PYC
                      {: 
-                         insertarEnPolaca(PYC);
                          System.out.println("R7: sent -> sent_put PYC");
                     :}
-                    | sent_get PYC:PYC
+                    | sent_get PYC
                      {: 
-                         insertarEnPolaca(PYC);
                          System.out.println("R8: sent -> sent_get PYC");
                     :}
                     | seleccion
@@ -107,98 +112,138 @@ asig           ::= ID:ID OP_AS:OP_AS expresion
                          System.out.println("R10: asig -> ID OP_ASig expresion");
                     :};
 
-iteracion      ::= WHILE PA condicion PC LA prog  LC
-                    {: 
+iteracion      ::= WHILE {:
+                         pila.push(polaca.size());
                          insertarEnPolaca("ET");
+                         System.out.println("Despues del while");
+                         System.out.println(pila);
+                         RESULT = new Symbol(-1); 
+                    :}PA condicion {:
+                         System.out.println("Despues de la condicion");
+                         System.out.println(pila);
+                         RESULT = new Symbol(-1); 
+                    :}PC LA prog {:
+                         insertarEnPolaca("BI");
+                         if(hayDobleComparacion != 0){
+                             insertarEnPolaca(String.valueOf(polaca.size() + 3), pila.pop() );
+                             insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                              hayDobleComparacion--; 
+                         } else {
+                         insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                         }
+
+                        insertarEnPolaca(String.valueOf(pila.pop()), polaca.size() );
+
+
+                         RESULT = new Symbol(-1); 
+                    :}  LC
+                    {: 
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
-seleccion      ::= IF PA condicion  PC LA prog LC seleccion_else
-                    {: 
-                         //pila.pop(); //desapilar tope de la pila
-                         //escribir_en_celda(); //En la celda X, se escribe el n° de celda actual
-                         System.out.println("R12: seleccion -> IF condicion LA prog LC");
-                    :};
+seleccion      ::= IF  PA condicion PC LA prog LC seleccion_else
+                     {:
+                          System.out.println("eNTRRAA");
+                    :}; 
 
-seleccion_else ::= ELSE LA prog LC
+
+seleccion_else ::= ELSE {:
+                         insertarEnPolaca("BI");
+                          insertarEnPolaca(String.valueOf(polaca.size() + 2), pila.pop() );
+                          if(hayDobleComparacion != 0){
+                               insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                               hayDobleComparacion--; 
+                          }
+                         pila.push(polaca.size() );
+                         RESULT = new Symbol(-1); 
+               :} LA prog LC
                 {:
-                         // pila.pop(); //desapilar tope de pila
-                         // escribir_en_celda(); // escribir en celda X el n° de celda actual + 1
-                         
+                         insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
                          System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
 
                 :} 
                 | 
                 vacio 
                 {: 
-                         System.out.println("If sin else"); 
+                if(hayDobleComparacion != 0){
+                  insertarEnPolaca(String.valueOf(polaca.size()+2), pila.pop() );
+                  insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                    hayDobleComparacion--; 
+                } else {
+                   insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+
+                }
+                   System.out.println("If sin else"); 
+                   RESULT = new Symbol(-1); 
                 :};
                 
-vacio          ::= {: 
-                    System.out.println("If sin else"); 
-                      RESULT = new Symbol(-1); 
+vacio          ::= {:
+                    RESULT = new Symbol(-1);
                :};
+               
 
 condicion      ::= comparacion
                     {: 
+                        
                          System.out.println("R15: condicion -> comparacion");
-                    :} 
+                    :}
                     | comparacion OP_AND  comparacion
                     {: 
-                         insertarEnPolaca("AND");
+                         hayDobleComparacion++; 
+                        insertarEnPolaca("AND");
                          System.out.println("R16: condicion -> comparacion OP_AND  comparacion");
                     :} 
                     | comparacion OP_OR comparacion
                     {: 
+                         hayDobleComparacion++; 
                          insertarEnPolaca("OR");
                          System.out.println("R17: condicion -> comparacion OP_OR comparacion");
                     :}
-                    | OP_NOT:OP_NOT comparacion
+                    | OP_NOT comparacion
                     {: 
-                         insertarEnPolaca(OP_NOT);
+                         insertarEnPolaca("NOT");
                           System.out.println("R18: condicion -> OP_NOT comparacion");
                     :}; 
 comparacion    ::= expresion comparador expresion
                     {: 
+                        insertarEnPolaca("CMP");
+                         insertarEnPolaca(comparadorString);
+                         pila.push(polaca.size());
                           System.out.println("R19: comparacion -> expresion comparador expresion");
                     :}; 
 
 comparador     ::= OP_MAYIG:OP_MAYIG 
-                    {: 
+                    {:  
+                         comparadorString = "BLT"; 
                          System.out.println("comparador -> OP_MAYIG " );
-                         System.out.println("operador:" + OP_MAYIG );
-                         insertarEnPolaca("BLT");
 
 		          :}
                     | OP_MENIG:OP_MENIG 
                     {: 
+                         comparadorString = "BGT"; 
                          System.out.println("comparador -> OP_MENIG" );
-                         System.out.println("operador:" + OP_MENIG);
-                         insertarEnPolaca("BGT");
 		          :}
                     | OP_MAY:OP_MAY 
                     {: 
+                         comparadorString = "BLE"; 
                          System.out.println("comparador -> OP_MAY" );
                          System.out.println("operador:" + OP_MAY );
-                         insertarEnPolaca("BLE");
 		          :}
                     | OP_MEN:OP_MEN
                     {: 
-                         System.out.println("comparador -> OP_MEN" );
+                         comparadorString = "BGE"; 
+                         System.out.println("comparador -> OP_MEN");
                          System.out.println("operador:" +OP_MEN );
-                         insertarEnPolaca("BGE");
 		          :}
                     | OP_COMP:OP_COMP
                     {: 
+                         comparadorString = "BNE"; 
                          System.out.println("comparador -> OP_COMP" );
-                         System.out.println("operador:" + OP_COMP);
-                         insertarEnPolaca("BNE");
-                          
+                      
 		          :}
                     | OP_DIST:OP_DIST
                     {: 
+                         comparadorString = "BEQ"; 
                          System.out.println("comparador -> OP_DIST" );
-                         System.out.println("operador:" + OP_DIST);
-                         insertarEnPolaca("BEQ");
 		          :};
         
 expresion      ::= expresion OP_SUM:OP_SUM termino
@@ -250,12 +295,12 @@ variable       ::= CONST_STR:CONST_STR {:
                | CONST_FLOAT:CONST_FLOAT {: 
                          tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                          System.out.println("variable -> CONST_FLOAT");
-                         insertarEnPolaca(CONST_FLOAT);
+                        insertarEnPolaca(CONST_FLOAT);
                :}
                 | CTE_BIN:CTE_BIN {: 
-                          String valorBin = CTE_BIN.substring(2);
+                         String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                         insertarEnPolaca(valorDecimal);
+                        insertarEnPolaca(valorDecimal);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorBin, null);
                          System.out.println("variable -> CTE_BIN");
                :}
@@ -270,21 +315,18 @@ sent_put       ::= PUT variable {:
                     System.out.println("sent_put -> PUT variable");
                :};
 
-sent_get     ::= GET ID:ID {:
+sent_get     ::= GET ID {:
                     System.out.println("sent_get -> GET ID");
-                    insertarEnPolaca(ID);
                :};
 
-dec           ::= DIM:DIM OP_MEN:OP_MEN list_var OP_MAY:OP_MAY AS:AS OP_MEN list_td OP_MAY {:
+dec           ::= DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY {:
                     tablaDeSimbolos.agregarVariables(colaNombres, colaTipoDato);
                     System.out.println("dec -> DIM OP_MEN list_var OP_MAY AS OP_MEN list_td OP_MAY");
                :};    
 
 
-list_var ::= list_var COMA:COMA ID:ID
+list_var ::= list_var COMA ID:ID
                {:
-                         insertarEnPolaca(COMA);
-                         insertarEnPolaca(ID);
                          colaNombres.add(ID);
                          System.out.println("list_var -> list_var COMA ID: ");
                :};
@@ -292,14 +334,12 @@ list_var ::= list_var COMA:COMA ID:ID
 list_var ::= ID:ID
                {:
                     colaNombres.add(ID);
-                    insertarEnPolaca(ID);
                      tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                      System.out.println("list_var -> ID ");
                :};
                
-list_td ::= list_td COMA:COMA tipo_dato
+list_td ::= list_td COMA tipo_dato
                {:
-                         insertarEnPolaca(COMA);
                          System.out.println("list_td -> list_td COMA tipo_dato");
                :};
                
@@ -311,26 +351,22 @@ list_td ::= tipo_dato
 tipo_dato ::= INTEGER:INTEGER 
                {:   
                          colaTipoDato.add(INTEGER);
-                         insertarEnPolaca(INTEGER);
                          System.out.println("tipo_dato -> INTEGER");
                :}
                | FLOAT:FLOAT
                {:
                          colaTipoDato.add(FLOAT);
-                         insertarEnPolaca(FLOAT);
                          System.out.println("tipo_dato -> FLOAT");:}
                | STRING:STRING
                {:
                          colaTipoDato.add(STRING);
-                         insertarEnPolaca(STRING);
                          System.out.println("tipo_dato -> STRING");
                :};
 
-list_exp       ::= list_exp COMA:COMA expresion
-                  {:
-                         insertarEnPolaca(COMA);
-                         System.out.println("list_exp -> list_exp COMA expresion");
-                   :}
+list_exp       ::= list_exp COMA expresion
+               {:
+                    System.out.println("list_exp -> list_exp COMA expresion");
+               :}
                 | expresion
                {: 
                     System.out.println("list_exp -> expresion");
@@ -382,19 +418,12 @@ factor         ::= ID:ID
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
 		     :}
                | PA:PA expresion PC:PC
-               {: 
-                    insertarEnPolaca(PA);
-                    insertarEnPolaca(PC);
+               {:
                     System.out.println("factor -> PA expresion PC");
 		     :}
                | CONTAR:CONTAR PA:PA expresion PYC:PYC CA:CA list_exp CC:CC PC:PC
-               {: 
-                    insertarEnPolaca(CONTAR);
-                    insertarEnPolaca(PA);
-                    insertarEnPolaca(PYC);
-                    insertarEnPolaca(CA);
-                    insertarEnPolaca(CC);
-                    insertarEnPolaca(PC);
+               {:
+                     
                     System.out.println("factor -> CONTAR PA expresion PYC CA list_exp CC PC");
 		     :};  
 

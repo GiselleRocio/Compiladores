@@ -1,22 +1,6 @@
-DIM < contador,promedio,actual,suma> AS < Integer,Float,Float,Float >
-PUT "Prueba.txt LyC Tema 1!";
-PUT "Ingrese un valor enter ";
-GET actual;
-contador: 0;
-suma: 02.5+0xA2B0;
-while (contador <= 92) {
-    contador: contador + 1;
-    actual: (contador/0.342) + (contador* contar (actual*contador ; [256,0b10,52,4]));
-    suma: suma + actual;
+while( b > 0 and b < 0 ) {
+	c: 56;
+	if(a >= 17 and b <= 5) {
+		g: 5;
+	}
 }
-
-PUT "La suma es: ";
-PUT suma;
-
-if (actual > 0b10 and actual <> 0){
-    PUT "actual es mayor ";
-}else {
-    if (actual < 0b111010){
-         PUT "no es mayor que 2";
-     }
- }

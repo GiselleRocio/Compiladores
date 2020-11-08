@@ -29,9 +29,7 @@ public class TablaDeSimbolos {
         return listaDeSimbolos.stream().anyMatch(simbolo -> simbolo.getNombre().equals(nombre));
     }
 
-    public void guardarTabla(ArrayList<String> polaca) {
-
-        System.out.println("polaca: "+ polaca);
+    public void guardarTabla() {
 
         try (BufferedWriter br = new BufferedWriter(new FileWriter("./src/Grupo02/ts.txt"))) {
 
