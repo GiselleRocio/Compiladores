@@ -390,7 +390,6 @@ list_var ::= list_var COMA ID:ID
 list_var ::= ID:ID
                {:
                     colaNombres.add(ID);
-                     tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                      System.out.println("list_var -> ID ");
                :};
                
@@ -498,9 +497,6 @@ factor         ::= ID:ID
                     insertarEnPolaca(":");
                     insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> list_constantes COMA constantes");
-                     System.out.println(polaca);
-                          System.out.println(polaca.size());
-
                     RESULT = new Symbol(-1); 
    
                :}
@@ -518,8 +514,6 @@ factor         ::= ID:ID
                     insertarEnPolaca(":");
                     insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> constantes");
-                     System.out.println(polaca);
-
                      RESULT = new Symbol(-1); 
                :} ;
 constantes     ::= CONST_INT:CONST_INT {:

@@ -1,8 +1,8 @@
 NOMBRE                        |TIPODATO                      |VALOR                         |LONGITUD                      
-_contador                     |-                             |contador                      |-                             
+_contador                     |Integer                       |contador                      |-                             
 _promedio                     |Float                         |promedio                      |-                             
 _actual                       |Float                         |actual                        |-                             
-_suma                         |Float                         |suma                          |-                             
+_suma                         |String                        |suma                          |-                             
 _"Prueba.txt LyC Tema 1!      |-                             |"Prueba.txt LyC Tema 1!       |23                            
 _"Ingrese un valor enter      |-                             |"Ingrese un valor enter       |24                            
 _0                            |-                             |0                             |-                             

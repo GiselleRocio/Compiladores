@@ -1,4 +1,4 @@
-DIM < contador,promedio,actual,suma> AS < Integer,Float,Float,Float >
+DIM < contador,promedio,actual,suma> AS <Integer, Float,Float,String >
 PUT "Prueba.txt LyC Tema 1!";
 PUT "Ingrese un valor enter ";
 GET actual;

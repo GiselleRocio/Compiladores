@@ -56,8 +56,7 @@ public class TablaDeSimbolos {
         if(colaNombre.size() != colaTipoDato.size()) {
             throw new Error("Error de sintaxis: La cantidad de variables declaradas no coincide con la cantidad de tipos de datos declarados."); 
         }
-
-        while(colaNombre.peek() != null) {
+        while(colaNombre.peek() != null ) {
             nombre = colaNombre.poll();
             tipoDato = colaTipoDato.poll();
             if(!estaEnTabla(nombre)) {

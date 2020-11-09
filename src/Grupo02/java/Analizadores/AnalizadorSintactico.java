@@ -1106,7 +1106,6 @@ class CUP$AnalizadorSintactico$actions {
 		String ID = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
                     colaNombres.add(ID);
-                     tablaDeSimbolos.agregarEnTabla("_"+ID, null, ID, null);
                      System.out.println("list_var -> ID ");
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_var",17, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -1345,9 +1344,6 @@ class CUP$AnalizadorSintactico$actions {
                     insertarEnPolaca(":");
                     insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> list_constantes COMA constantes");
-                     System.out.println(polaca);
-                          System.out.println(polaca.size());
-
                     RESULT = new Symbol(-1); 
    
                
@@ -1372,8 +1368,6 @@ class CUP$AnalizadorSintactico$actions {
                     insertarEnPolaca(":");
                     insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> constantes");
-                     System.out.println(polaca);
-
                      RESULT = new Symbol(-1); 
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("list_constantes",21, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
