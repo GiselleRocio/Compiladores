@@ -944,7 +944,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_STRright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_STR = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
-                    String stringSinComillas = CONST_STR.substring(0, CONST_STR.length() - 1);
+                    String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
                     tablaDeSimbolos.agregarEnTabla("_"+stringSinComillas, null, stringSinComillas, stringSinComillas.length());
                     System.out.println("variable -> CONST_STRING");
                     insertarEnPolaca(CONST_STR);
@@ -1237,7 +1237,7 @@ class CUP$AnalizadorSintactico$actions {
 		String CONST_STR = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		  
                     insertarEnPolaca(CONST_STR);
-                    String stringSinComillas = CONST_STR.substring(0, CONST_STR.length() - 1);
+                    String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
                     tablaDeSimbolos.agregarEnTabla("_"+stringSinComillas, null, stringSinComillas, stringSinComillas.length());
                     System.out.println("factor -> CONST_STR: " + CONST_STR);
 		          System.out.println("constante CONST_STR: " + CONST_STR);
@@ -1300,6 +1300,8 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 
+                    tablaDeSimbolos.agregarEnTabla("@constanteAContar", null, null, null);
+                    tablaDeSimbolos.agregarEnTabla("@contador", "Integer", null, null);
                    insertarEnPolaca("@constanteAContar");
                    insertarEnPolaca(":");
                    insertarEnPolaca("0");
