@@ -12,6 +12,7 @@ public class Polaca {
     public Polaca(){
         
     }
+
     public void guardarPolaca(ArrayList<String> polaca) {
 
         try (BufferedWriter br = new BufferedWriter(new FileWriter("./src/Grupo02/intermedia.txt"))) {

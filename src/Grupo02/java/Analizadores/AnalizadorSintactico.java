@@ -8,6 +8,7 @@ package Analizadores;
 import java_cup.runtime.*;
 import java_cup.runtime.Symbol;
 import Tabla.*;
+import Assembler.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -334,6 +335,7 @@ class CUP$AnalizadorSintactico$actions {
      public int contador = 0;
      public int constanteAContar = 0;  
      public Polaca polacaManager = new Polaca();
+     public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
      }
@@ -420,6 +422,7 @@ class CUP$AnalizadorSintactico$actions {
                          System.out.println("R1: inicio -> prog");
                          System.out.println("COMPILACION EXITOSA!");
                          polacaManager.guardarPolaca(polaca); 
+                         assemblerManager.generarAssembler(tablaDeSimbolos.getLista(), polaca);
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("inicio",0, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -945,7 +948,7 @@ class CUP$AnalizadorSintactico$actions {
 		String CONST_STR = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
                     String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
-                    tablaDeSimbolos.agregarEnTabla("_"+stringSinComillas, null, stringSinComillas, stringSinComillas.length());
+                    tablaDeSimbolos.agregarEnTabla(stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
                     System.out.println("variable -> CONST_STRING");
                     insertarEnPolaca(CONST_STR);
                
@@ -1011,7 +1014,7 @@ class CUP$AnalizadorSintactico$actions {
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
                         insertarEnPolaca(valorDecimal);
-                         tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorBin, null);
+                         tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("variable -> CTE_BIN");
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -1238,7 +1241,7 @@ class CUP$AnalizadorSintactico$actions {
 		  
                     insertarEnPolaca(CONST_STR);
                     String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
-                    tablaDeSimbolos.agregarEnTabla("_"+stringSinComillas, null, stringSinComillas, stringSinComillas.length());
+                    tablaDeSimbolos.agregarEnTabla(stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
                     System.out.println("factor -> CONST_STR: " + CONST_STR);
 		          System.out.println("constante CONST_STR: " + CONST_STR);
 		     
@@ -1257,7 +1260,7 @@ class CUP$AnalizadorSintactico$actions {
                     String valorBin = CTE_BIN.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
                     insertarEnPolaca(valorDecimal);
-                    tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorBin, null);
+                    tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                     System.out.println("factor -> cte_bin: " + CTE_BIN);
 		          System.out.println("constante CTE_BIN: " + CTE_BIN);
 		     
@@ -1384,6 +1387,7 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_INTright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_INT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                           insertarEnPolaca(CONST_INT);
                           System.out.println("Constante: "+ CONST_INT);
                     
@@ -1399,6 +1403,8 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_FLOATright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_FLOAT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
+                    
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                           insertarEnPolaca(CONST_FLOAT);
                             System.out.println("Constante: "+ CONST_FLOAT);
 
@@ -1415,8 +1421,11 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_BINright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_BIN = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
-                          insertarEnPolaca(CTE_BIN);
-                          System.out.println("Constante: "+ CTE_BIN);
+                         String valorBin = CTE_BIN.substring(2);
+                         String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
+                         insertarEnPolaca(valorDecimal);
+                         tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
+                         System.out.println("Constante: "+ CTE_BIN);
 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("constantes",22, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -1431,7 +1440,10 @@ class CUP$AnalizadorSintactico$actions {
 		int CTE_HEXAright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CTE_HEXA = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
-                          insertarEnPolaca(CTE_HEXA);
+                         String valorHexa = CTE_HEXA.substring(2);
+                         String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
+                         insertarEnPolaca(valorDecimal);
+                         tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_HEXA);
 
                     

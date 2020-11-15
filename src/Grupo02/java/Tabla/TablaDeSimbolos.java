@@ -60,10 +60,16 @@ public class TablaDeSimbolos {
             nombre = colaNombre.poll();
             tipoDato = colaTipoDato.poll();
             if(!estaEnTabla(nombre)) {
-                agregarEnTabla("_"+nombre, tipoDato, nombre, null);
+                agregarEnTabla("_"+nombre, tipoDato, null, null);
             } else {
                 throw new Error("Error de sintaxis: '"+nombre+"' ya esta declarada."); 
             }
         }
+    }
+
+    public List<Simbolo> getLista(){
+
+        return listaDeSimbolos;
+
     }
 }

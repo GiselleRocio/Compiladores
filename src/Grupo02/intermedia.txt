@@ -45,7 +45,7 @@ Posición: 43, Valor: @contador
 Posición: 44, Valor: +
 Posición: 45, Valor: @contador
 Posición: 46, Valor: :
-Posición: 47, Valor: 0b10
+Posición: 47, Valor: 2
 Posición: 48, Valor: @constanteAContar
 Posición: 49, Valor: CMP
 Posición: 50, Valor: BNE
