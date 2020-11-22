@@ -201,22 +201,22 @@ public class GeneradorAssembler{
     }
 
     private String gestorBGE(){
-        String cadena = "\tJGE ";
+        String cadena = "\tJAE ";
         return cadena;
     }
 
     private String gestorBGT(){
-        String cadena = "\tJG ";
+        String cadena = "\tJA ";
         return cadena;
     }
 
     private String gestorBLE(){
-        String cadena = "\tJLE ";
+        String cadena = "\tJBE ";
         return cadena;
     }
 
     private String gestorBLT(){
-        String cadena = "\tJL ";
+        String cadena = "\tJB ";
         return cadena;
     }
 

@@ -34,7 +34,7 @@ ET_cond0:
 	FSTSW AX
 	SAHF
 	FFREE
-	JGE ET_else_cond0
+	JAE ET_else_cond0
 	DisplayString _str1
 	newline 1
 	JMP ET_end_cond0
