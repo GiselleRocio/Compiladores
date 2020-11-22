@@ -75,74 +75,83 @@ public class GeneradorAssembler{
                         "\tMOV DS,EAX\n" +
                         "\tMOV ES,EAX\n\n";
 
-        for(int x = 0 ; x < polaca.size(); x++){               
-                switch (polaca.get(x)) {
+        for(int x = 0 ; x < polaca.size(); x++){
+            String contenido = polaca.get(x);
+            if(contenido.startsWith("ET")) {
+                codigo += contenido+"\n";
+            } else {
+                switch (contenido) {
                     case "+":
-                     codigo += gestorSuma();
-                    break;
+                        codigo += gestorSuma();
+                        break;
                     case "-":
                         codigo += gestorResta();
-                    break;
+                        break;
                     case "*":
                         codigo += gestorMultiplicacion();
-                    break;
+                        break;
                     case "/":
                         codigo += gestorDivision();
-                    break;
+                        break;
                     case "PUT":
                     case "GET":
-                    case ":": 
-                    break;
+                    case ":":
+                        break;
                     case "CMP":
                         codigo += gestorCMP();
-                    break;
+                        break;
                     case "BGE":
                         codigo += gestorBGE();
-                    break;
+                        break;
                     case "BGT":
                         codigo += gestorBGT();
-                    break;
+                        break;
                     case "BLE":
-                         codigo += gestorBLE();
-                    break;
+                        codigo += gestorBLE();
+                        break;
                     case "BLT":
                         codigo += gestorBLT();
-                    break;
+                        break;
                     case "BEQ":
                         codigo += gestorBEQ();
-                    break;
+                        break;
                     case "BNE":
                         codigo += gestorBNE();
-                        
-                    break;
+                        break;
+                    case "BI":
+                        codigo += gestorBI();
+                        break;
                     default:
-                       codigo += gestorDefault(polaca.get(x), polaca.get(x+1));
-                    break;
+                        String contenidoSiguiente = polaca.get(x + 1);
+                        codigo += gestorDefault(contenido, contenidoSiguiente);
+                        break;
                 }
+            }
         }
         return codigo; 
     }
 
     private String gestorDefault(String variable, String siguiente){
+        String cadena;
         switch(siguiente){
             case ":":
-                return "FSTP " + variable + "\n";
-               
-            case "GET": // obtener de teclado?
-                  return "GetFloat " + variable + "\n";
-           
+                return "\tFSTP " + variable + "\n";
+            case "GET": // obtener de teclado
+                  return "\tGetFloat " + variable + "\n";
              case "PUT": // mostrar por pantalla
-                if(ts.esConstString(variable.replace(" ", "_"))){
-                    return "DisplayString " + variable.replace(" ", "_") + "\n";
+                if(ts.esConstString(variable)){
+                    cadena = "\tDisplayString " + variable + "\n";
                 } else {
-                    return "DisplayFloat " + variable + " , 2 \n"; 
+                    cadena = "\tDisplayFloat " + variable + " , 2 \n";
                 }
-                
+                cadena += "\tnewline 1\n";
+                return cadena;
             default:
-                if (variable.startsWith("_"))
-                    return "FLD " + variable + "\n";
-                else
-                    return "FILD " + variable + "\n";
+                return "\tFLD " + variable + "\n";
+                //if (variable.startsWith("_"))
+                    //return "FLD " + variable + "\n"; 
+                //else
+                    //return "FILD " + variable + "\n"; // me parece que esto no va asi
 
             
         }
@@ -150,89 +159,67 @@ public class GeneradorAssembler{
     }
 
     private String gestorSuma(){
-
-        String cadena = "FADD" + "\n";
-        
+        String cadena = "\tFADD" + "\n";
         return cadena; 
     }
     
     private String gestorResta(){
-        String cadena = "FSUB " + "\n";
-        return cadena; 
-        
+        String cadena = "\tFSUB " + "\n";
+        return cadena;
     }
 
-
     private String gestorMultiplicacion(){
-
-        String cadena = "FMUL " + "\n";
-         return cadena; 
-        
+        String cadena = "\tFMUL " + "\n";
+         return cadena;
     }
 
     private String gestorDivision(){
-
-        String cadena = "FDIV " + "\n";
+        String cadena = "\tFDIV " + "\n";
         return cadena;   
     }
 
-    private String gestorPut(){
-        
-        return "Display";   
-    }
-
-    private String gestorGet(){
-        
-        return "M"; 
-    }
-
-    private String gestorAsig(){
-        
-        return "FSTP \n";   
-    }
-
     private String gestorCMP(){
-
-        
-        return "M";   
+        String cadena = "\tFXCH\n" +
+                "\tFCOMP\n" +
+                "\tFSTSW AX\n" +
+                "\tSAHF\n";
+        return cadena;
     }
 
     private String gestorBGE(){
-;
-        
-        return "M";   
+        String cadena = "\tJGE ";
+        return cadena;
     }
 
     private String gestorBGT(){
-
-        
-        return "M";   
+        String cadena = "\tJG ";
+        return cadena;
     }
 
     private String gestorBLE(){
- 
-        
-        return "M";   
+        String cadena = "\tJLE ";
+        return cadena;
     }
 
     private String gestorBLT(){
-
-        
-        return "M";   
+        String cadena = "\tJL ";
+        return cadena;
     }
 
     private String gestorBEQ(){
-        
-        return "M";   
+        String cadena = "\tJE ";
+        return cadena;
     }
 
     private String gestorBNE(){
-
-        return "M";   
+        String cadena = "\tJNE ";
+        return cadena;
     }
 
-    
-
+    private String gestorBI(){
+        String cadena = "\tJMP ";
+        return cadena;
+    }
 
     public String generarFooter(){
         return "\tMOV EAX, 4C00h\n" +

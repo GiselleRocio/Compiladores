@@ -1,11 +1,7 @@
 NOMBRE                        |TIPODATO                      |VALOR                         |LONGITUD                      
-contador                      |Integer                       |-                             |-                             
-promedio                      |Float                         |-                             |-                             
-actual                        |Float                         |-                             |-                             
-suma                          |String                        |-                             |-                             
-_Prueba_txt_LyC_Tema_1        |-                             |Prueba txt LyC Tema 1         |21                            
-_Ingrese_un_valor_enter_      |-                             |Ingrese un valor enter        |23                            
-_9                            |-                             |9                             |-                             
-_2                            |-                             |2                             |-                             
-_1                            |-                             |1                             |-                             
+actual                        |Integer                       |-                             |-                             
 _5                            |-                             |5                             |-                             
+_2                            |-                             |2                             |-                             
+_0                            |-                             |0                             |-                             
+_1                            |-                             |1                             |-                             
+_str1                         |-                             |sali del while                |14                            

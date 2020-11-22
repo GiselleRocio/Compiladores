@@ -23,7 +23,9 @@ action code
      public int contador = 0;
      public int constanteAContar = 0;  
      public Polaca polacaManager = new Polaca();
-     private int contEtiqueta = 0; 
+     private int contEtiquetaWhile = 0;
+     private int contEtCond = 0; //usamos etiquetas para cada condicion, en vez de if
+     private int contadorCteString = 1;
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -152,8 +154,8 @@ asig           ::= ID:ID OP_AS:OP_AS expresion
 
 iteracion      ::= WHILE {:
                          pila.push(polaca.size());
-                         insertarEnPolaca("ET"+contEtiqueta);
-                         contEtiqueta++;
+                         insertarEnPolaca("ET_while"+contEtiquetaWhile);
+                         contEtiquetaWhile++;
                          RESULT = new Symbol(-1); 
                     :}PA condicion {:
                          if(isOr != 0){
@@ -163,6 +165,7 @@ iteracion      ::= WHILE {:
                     :}PC LA prog {:
                          insertarEnPolaca("BI");
                          if(hayDobleComparacion != 0){
+                            // aca hay que ver lo de las etiquetas
                              insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
                               if(isOr != 0){
                                    insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop());
@@ -172,19 +175,20 @@ iteracion      ::= WHILE {:
                               }
                               hayDobleComparacion--; 
                          } else {
-                         insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                            insertarEnPolaca("ET_end_cond" + hayDobleComparacion, pila.pop() );
+                         //insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() ); // aca iria el fin de cond, hay que tener el numero
                          }
 
-                        insertarEnPolaca(String.valueOf(pila.pop()));
+                        //insertarEnPolaca(String.valueOf(pila.pop()));
+                        insertarEnPolaca(polaca.get(pila.pop())); // inserto directamente la etiqueta, no el numero
 
                          RESULT = new Symbol(-1); 
                     :}  LC
-                    {: 
+                    {:
+                        insertarEnPolaca("ET_end_cond"+ hayDobleComparacion);
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
 seleccion      ::= IF {:
-                         insertarEnPolaca("ET"+contEtiqueta);
-                         contEtiqueta++; 
                          RESULT = new Symbol(-1); 
                     :} PA condicion PC LA{:
                     if(isOr!=0){
@@ -241,7 +245,7 @@ vacio          ::= {:
                
 
 condicion      ::= comparacion
-                    {: 
+                    {:
                          System.out.println("R15: condicion -> comparacion");
                     :}
                     | comparacion OP_AND  comparacion
@@ -272,38 +276,62 @@ comparacion    ::= expresion comparador expresion
                          insertarEnPolaca(comparadorString);
                          pila.push(polaca.size());
                          avanzar();
-                          System.out.println("R19: comparacion -> expresion comparador expresion");
-                    :}; 
+                         System.out.println("R19: comparacion -> expresion comparador expresion");
+                    :};
 
 comparador     ::= OP_MAYIG 
-                    {:  
+                    {:
+                    // por ahora por ser unica condicion lo hacemos aca
+                        String etiquetaCond = "ET_cond"+contEtCond;
+                         contEtCond++;
+                         insertarEnPolaca(etiquetaCond);
                          comparadorString = "BLT"; 
                          System.out.println("comparador -> OP_MAYIG " );
 
 		          :}
                     | OP_MENIG 
-                    {: 
+                    {:
+                    // por ahora por ser unica condicion lo hacemos aca
+                                            String etiquetaCond = "ET_cond"+contEtCond;
+                                             contEtCond++;
+                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BGT"; 
                          System.out.println("comparador -> OP_MENIG" );
 		          :}
                     | OP_MAY 
-                    {: 
+                    {:
+                    // por ahora por ser unica condicion lo hacemos aca
+                                            String etiquetaCond = "ET_cond"+contEtCond;
+                                             contEtCond++;
+                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BLE"; 
                          System.out.println("comparador -> OP_MAY" );
 		          :}
                     | OP_MEN
-                    {: 
+                    {:
+                    // por ahora por ser unica condicion lo hacemos aca
+                                            String etiquetaCond = "ET_cond"+contEtCond;
+                                             contEtCond++;
+                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BGE"; 
                          System.out.println("comparador -> OP_MEN");
 		          :}
                     | OP_COMP
-                    {: 
+                    {:
+                    // por ahora por ser unica condicion lo hacemos aca
+                                            String etiquetaCond = "ET_cond"+contEtCond;
+                                             contEtCond++;
+                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BNE"; 
                          System.out.println("comparador -> OP_COMP" );
                       
 		          :}
                     | OP_DIST
-                    {: 
+                    {:
+                    // por ahora por ser unica condicion lo hacemos aca
+                                            String etiquetaCond = "ET_cond"+contEtCond;
+                                             contEtCond++;
+                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BEQ"; 
                          System.out.println("comparador -> OP_DIST" );
 		          :};
@@ -341,9 +369,11 @@ termino        ::=  termino OP_DIV:OP_DIV factor
                
 variable       ::= CONST_STR:CONST_STR {:
                     String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
-                    tablaDeSimbolos.agregarEnTabla("_" +stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
+                    String nombreCteString = "_str" + contadorCteString;
+                    tablaDeSimbolos.agregarEnTabla(nombreCteString, null, stringSinComillas, stringSinComillas.length());
                     System.out.println("variable -> CONST_STRING");
-                    insertarEnPolaca("_"+stringSinComillas);
+                    insertarEnPolaca(nombreCteString);
+                    contadorCteString++;
                :} 
                | ID:ID {:
                          System.out.println("variable -> ID");
@@ -449,10 +479,12 @@ factor         ::= ID:ID
 		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     :}
                | CONST_STR:CONST_STR
-               {:  
-                    insertarEnPolaca("_"+CONST_STR);
+               {:
+                    String nombreCteString = "_str" + contadorCteString;
+                    contadorCteString++;
+                    insertarEnPolaca(nombreCteString);
                     String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
-                    tablaDeSimbolos.agregarEnTabla("_" + stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
+                    tablaDeSimbolos.agregarEnTabla(nombreCteString, null, stringSinComillas, stringSinComillas.length());
                     System.out.println("factor -> CONST_STR: " + CONST_STR);
 		          System.out.println("constante CONST_STR: " + CONST_STR);
 		     :}
