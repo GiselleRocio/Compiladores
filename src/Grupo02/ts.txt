@@ -2,6 +2,7 @@ NOMBRE                        |TIPODATO                      |VALOR             
 actual                        |Integer                       |-                             |-                             
 _5                            |-                             |5                             |-                             
 _2                            |-                             |2                             |-                             
-_0                            |-                             |0                             |-                             
-_1                            |-                             |1                             |-                             
-_str1                         |-                             |sali del while                |14                            
+_8                            |-                             |8                             |-                             
+_str1                         |-                             |menor a 8                     |9                             
+_str2                         |-                             |no menor a 8                  |12                            
+_str3                         |-                             |sali del while                |14                            

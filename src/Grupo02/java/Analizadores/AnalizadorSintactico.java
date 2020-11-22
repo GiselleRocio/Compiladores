@@ -340,6 +340,7 @@ class CUP$AnalizadorSintactico$actions {
      private int contEtiquetaWhile = 0;
      private int contEtCond = 0; //usamos etiquetas para cada condicion, en vez de if
      private int contadorCteString = 1;
+     public Stack<Integer> pilaEtiquetasIf = new Stack<Integer>();
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -546,8 +547,13 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =null;
 
                          pila.push(polaca.size());
-                         insertarEnPolaca("ET_while"+contEtiquetaWhile+":");
+                         insertarEnPolaca("ET_while"+contEtiquetaWhile);
                          contEtiquetaWhile++;
+                         // por ahora por ser unica condicion lo hacemos aca, habra que ver doble comparacion y el if
+                         String etiquetaCond = "ET_cond"+contEtCond;
+                         contEtCond++;
+                         insertarEnPolaca(etiquetaCond);
+                         // termina
                          RESULT = new Symbol(-1); 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$0",23, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -605,6 +611,7 @@ class CUP$AnalizadorSintactico$actions {
               // propagate RESULT from NT$2
                 RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
 		
+                        insertarEnPolaca("ET_end_cond"+ hayDobleComparacion);
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("iteracion",9, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-9)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -616,6 +623,10 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 
+                        String etiquetaCond = "ET_cond"+contEtCond;
+                        pilaEtiquetasIf.push(contEtCond);
+                         contEtCond++;
+                         insertarEnPolaca(etiquetaCond);
                          RESULT = new Symbol(-1); 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$3",26, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -626,6 +637,7 @@ class CUP$AnalizadorSintactico$actions {
           case 16: // NT$4 ::= 
             {
               Symbol RESULT =(Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).value;
+
 
                     if(isOr!=0){
                          posicionesBloqueVerdaderoOr.push(polaca.size());
@@ -652,8 +664,12 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 
-                         insertarEnPolaca("BI");
-                          insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+
+                         insertarEnPolaca("BI"); // jmp
+                          //insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                          // else part numero
+                          String etiqueta = "ET_else_cond" + pilaEtiquetasIf.peek(); // no saco, solo miro
+                          insertarEnPolaca(etiqueta,pila.pop());
                           if(hayDobleComparacion != 0){
                                if(isOr!=0){
                                     insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop() );
@@ -665,6 +681,7 @@ class CUP$AnalizadorSintactico$actions {
                           }
                          pila.push(polaca.size() );
                          avanzar();
+                         insertarEnPolaca(etiqueta); // else_part:
                          RESULT = new Symbol(-1); 
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$5",28, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -678,9 +695,10 @@ class CUP$AnalizadorSintactico$actions {
               // propagate RESULT from NT$5
                 RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
 		
-                         insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
+                         insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
+                         insertarEnPolaca(etiqueta); // end_if:
                          System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
-
                 
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("seleccion_else",13, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -690,7 +708,8 @@ class CUP$AnalizadorSintactico$actions {
           case 20: // seleccion_else ::= vacio 
             {
               Symbol RESULT =null;
-		 
+		
+                    // hay que ver doble comparacion
                      if(hayDobleComparacion != 0){
                           insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                           if(isOr != 0){
@@ -702,7 +721,10 @@ class CUP$AnalizadorSintactico$actions {
                     
                          hayDobleComparacion--; 
                      } else {
-                          insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
+                        insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
+                        insertarEnPolaca(etiqueta); // end_if:
+                          //insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                      }
                      System.out.println("If sin else"); 
                      RESULT = new Symbol(-1); 
@@ -807,10 +829,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // por ahora por ser unica condicion lo hacemos aca
-                        String etiquetaCond = "ET_cond"+contEtCond+":";
-                         contEtCond++;
-                         insertarEnPolaca(etiquetaCond);
                          comparadorString = "BLT"; 
                          System.out.println("comparador -> OP_MAYIG " );
 
@@ -824,10 +842,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond+":";
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BGT"; 
                          System.out.println("comparador -> OP_MENIG" );
 		          
@@ -840,10 +854,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond+":";
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BLE"; 
                          System.out.println("comparador -> OP_MAY" );
 		          
@@ -856,10 +866,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond+":";
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BGE"; 
                          System.out.println("comparador -> OP_MEN");
 		          
@@ -872,10 +878,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond+":";
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BNE"; 
                          System.out.println("comparador -> OP_COMP" );
                       
@@ -889,10 +891,6 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond+":";
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BEQ"; 
                          System.out.println("comparador -> OP_DIST" );
 		          

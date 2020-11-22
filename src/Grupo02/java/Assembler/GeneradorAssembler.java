@@ -14,7 +14,8 @@ public class GeneradorAssembler{
 
     public static Logger LOGGER = Logger.getLogger(GeneradorAssembler.class.getName());
     List<Simbolo> listaDeSimbolos;
-    TablaDeSimbolos ts= new TablaDeSimbolos(); 
+    TablaDeSimbolos ts= new TablaDeSimbolos();
+    private Boolean huboSalto = false;
 
     public GeneradorAssembler(){
     }
@@ -78,7 +79,12 @@ public class GeneradorAssembler{
         for(int x = 0 ; x < polaca.size(); x++){
             String contenido = polaca.get(x);
             if(contenido.startsWith("ET")) {
-                codigo += contenido+"\n";
+                codigo += contenido;
+                if(!huboSalto) {
+                    codigo += ":";
+                }
+                huboSalto = false;
+                codigo+="\n";
             } else {
                 switch (contenido) {
                     case "+":
@@ -101,24 +107,31 @@ public class GeneradorAssembler{
                         codigo += gestorCMP();
                         break;
                     case "BGE":
+                        huboSalto = true;
                         codigo += gestorBGE();
                         break;
                     case "BGT":
+                        huboSalto = true;
                         codigo += gestorBGT();
                         break;
                     case "BLE":
+                        huboSalto = true;
                         codigo += gestorBLE();
                         break;
                     case "BLT":
+                        huboSalto = true;
                         codigo += gestorBLT();
                         break;
                     case "BEQ":
+                        huboSalto = true;
                         codigo += gestorBEQ();
                         break;
                     case "BNE":
+                        huboSalto = true;
                         codigo += gestorBNE();
                         break;
                     case "BI":
+                        huboSalto = true;
                         codigo += gestorBI();
                         break;
                     default:
@@ -182,7 +195,8 @@ public class GeneradorAssembler{
         String cadena = "\tFXCH\n" +
                 "\tFCOMP\n" +
                 "\tFSTSW AX\n" +
-                "\tSAHF\n";
+                "\tSAHF\n" +
+                "\tFFREE\n";
         return cadena;
     }
 

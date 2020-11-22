@@ -1,7 +1,9 @@
 DIM <actual> AS <Integer>
-actual: 5+2; 
-while(actual > 0) {
-	PUT actual;
-	actual: actual - 1;
+actual: 5+2;
+if(actual < 8){
+	PUT "menor a 8";
+} else {
+	PUT "no menor a 8";
 }
+
 PUT "sali del while";

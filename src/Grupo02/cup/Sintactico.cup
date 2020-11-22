@@ -26,6 +26,7 @@ action code
      private int contEtiquetaWhile = 0;
      private int contEtCond = 0; //usamos etiquetas para cada condicion, en vez de if
      private int contadorCteString = 1;
+     public Stack<Integer> pilaEtiquetasIf = new Stack<Integer>();
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -156,6 +157,11 @@ iteracion      ::= WHILE {:
                          pila.push(polaca.size());
                          insertarEnPolaca("ET_while"+contEtiquetaWhile);
                          contEtiquetaWhile++;
+                         // por ahora por ser unica condicion lo hacemos aca, habra que ver doble comparacion y el if
+                         String etiquetaCond = "ET_cond"+contEtCond;
+                         contEtCond++;
+                         insertarEnPolaca(etiquetaCond);
+                         // termina
                          RESULT = new Symbol(-1); 
                     :}PA condicion {:
                          if(isOr != 0){
@@ -189,8 +195,13 @@ iteracion      ::= WHILE {:
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
 seleccion      ::= IF {:
+                        String etiquetaCond = "ET_cond"+contEtCond;
+                        pilaEtiquetasIf.push(contEtCond);
+                         contEtCond++;
+                         insertarEnPolaca(etiquetaCond);
                          RESULT = new Symbol(-1); 
                     :} PA condicion PC LA{:
+
                     if(isOr!=0){
                          posicionesBloqueVerdaderoOr.push(polaca.size());
                     }
@@ -199,8 +210,12 @@ seleccion      ::= IF {:
 
 
 seleccion_else ::= ELSE {:
-                         insertarEnPolaca("BI");
-                          insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+
+                         insertarEnPolaca("BI"); // jmp
+                          //insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
+                          // else part numero
+                          String etiqueta = "ET_else_cond" + pilaEtiquetasIf.peek(); // no saco, solo miro
+                          insertarEnPolaca(etiqueta,pila.pop());
                           if(hayDobleComparacion != 0){
                                if(isOr!=0){
                                     insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop() );
@@ -212,16 +227,19 @@ seleccion_else ::= ELSE {:
                           }
                          pila.push(polaca.size() );
                          avanzar();
+                         insertarEnPolaca(etiqueta); // else_part:
                          RESULT = new Symbol(-1); 
                :} LA prog LC
                 {:
-                         insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
+                         insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
+                         insertarEnPolaca(etiqueta); // end_if:
                          System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
-
                 :} 
                 | 
                 vacio 
-                {: 
+                {:
+                    // hay que ver doble comparacion
                      if(hayDobleComparacion != 0){
                           insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                           if(isOr != 0){
@@ -233,7 +251,10 @@ seleccion_else ::= ELSE {:
                     
                          hayDobleComparacion--; 
                      } else {
-                          insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
+                        insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
+                        insertarEnPolaca(etiqueta); // end_if:
+                          //insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
                      }
                      System.out.println("If sin else"); 
                      RESULT = new Symbol(-1); 
@@ -281,57 +302,33 @@ comparacion    ::= expresion comparador expresion
 
 comparador     ::= OP_MAYIG 
                     {:
-                    // por ahora por ser unica condicion lo hacemos aca
-                        String etiquetaCond = "ET_cond"+contEtCond;
-                         contEtCond++;
-                         insertarEnPolaca(etiquetaCond);
                          comparadorString = "BLT"; 
                          System.out.println("comparador -> OP_MAYIG " );
 
 		          :}
                     | OP_MENIG 
                     {:
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond;
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BGT"; 
                          System.out.println("comparador -> OP_MENIG" );
 		          :}
                     | OP_MAY 
                     {:
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond;
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BLE"; 
                          System.out.println("comparador -> OP_MAY" );
 		          :}
                     | OP_MEN
                     {:
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond;
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BGE"; 
                          System.out.println("comparador -> OP_MEN");
 		          :}
                     | OP_COMP
                     {:
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond;
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BNE"; 
                          System.out.println("comparador -> OP_COMP" );
                       
 		          :}
                     | OP_DIST
                     {:
-                    // por ahora por ser unica condicion lo hacemos aca
-                                            String etiquetaCond = "ET_cond"+contEtCond;
-                                             contEtCond++;
-                                             insertarEnPolaca(etiquetaCond);
                          comparadorString = "BEQ"; 
                          System.out.println("comparador -> OP_DIST" );
 		          :};
