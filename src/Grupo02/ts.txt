@@ -1,23 +1,11 @@
 NOMBRE                        |TIPODATO                      |VALOR                         |LONGITUD                      
-_contador                     |Integer                       |-                             |-                             
-_promedio                     |Float                         |-                             |-                             
-_actual                       |Float                         |-                             |-                             
-_suma                         |String                        |-                             |-                             
-Prueba.txt_LyC_Tema_1!        |-                             |Prueba.txt LyC Tema 1!        |22                            
-Ingrese_un_valor_enter_       |-                             |Ingrese un valor enter        |23                            
-_0                            |-                             |0                             |-                             
-_02.5                         |-                             |02.5                          |-                             
-_0xA2B0                       |-                             |41648                         |-                             
-_92                           |-                             |92                            |-                             
+contador                      |Integer                       |-                             |-                             
+promedio                      |Float                         |-                             |-                             
+actual                        |Float                         |-                             |-                             
+suma                          |String                        |-                             |-                             
+_Prueba_txt_LyC_Tema_1        |-                             |Prueba txt LyC Tema 1         |21                            
+_Ingrese_un_valor_enter_      |-                             |Ingrese un valor enter        |23                            
+_9                            |-                             |9                             |-                             
+_2                            |-                             |2                             |-                             
 _1                            |-                             |1                             |-                             
-_0.342                        |-                             |0.342                         |-                             
-@constanteAContar             |-                             |-                             |-                             
-@contador                     |Integer                       |-                             |-                             
-_256                          |-                             |256                           |-                             
-_0b10                         |-                             |2                             |-                             
-_52                           |-                             |52                            |-                             
-_4                            |-                             |4                             |-                             
-La_suma_es:_                  |-                             |La suma es:                   |12                            
-actual_es_mayor_              |-                             |actual es mayor               |16                            
-_0b111010                     |-                             |58                            |-                             
-no_es_mayor_que_2             |-                             |no es mayor que 2             |17                            
+_5                            |-                             |5                             |-                             

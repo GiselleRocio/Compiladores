@@ -23,6 +23,7 @@ action code
      public int contador = 0;
      public int constanteAContar = 0;  
      public Polaca polacaManager = new Polaca();
+     private int contEtiqueta = 0; 
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -106,7 +107,7 @@ inicio          ::= prog
                          System.out.println("R1: inicio -> prog");
                          System.out.println("COMPILACION EXITOSA!");
                          polacaManager.guardarPolaca(polaca); 
-                         assemblerManager.generarAssembler(tablaDeSimbolos.getLista(), polaca);
+                         assemblerManager.generarAssembler(tablaDeSimbolos, polaca);
                     :};  
 
 prog           ::= sent
@@ -151,7 +152,8 @@ asig           ::= ID:ID OP_AS:OP_AS expresion
 
 iteracion      ::= WHILE {:
                          pila.push(polaca.size());
-                         insertarEnPolaca("ET");
+                         insertarEnPolaca("ET"+contEtiqueta);
+                         contEtiqueta++;
                          RESULT = new Symbol(-1); 
                     :}PA condicion {:
                          if(isOr != 0){
@@ -180,7 +182,11 @@ iteracion      ::= WHILE {:
                     {: 
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
-seleccion      ::= IF  PA condicion PC LA{:
+seleccion      ::= IF {:
+                         insertarEnPolaca("ET"+contEtiqueta);
+                         contEtiqueta++; 
+                         RESULT = new Symbol(-1); 
+                    :} PA condicion PC LA{:
                     if(isOr!=0){
                          posicionesBloqueVerdaderoOr.push(polaca.size());
                     }
@@ -335,9 +341,9 @@ termino        ::=  termino OP_DIV:OP_DIV factor
                
 variable       ::= CONST_STR:CONST_STR {:
                     String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
-                    tablaDeSimbolos.agregarEnTabla(stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
+                    tablaDeSimbolos.agregarEnTabla("_" +stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
                     System.out.println("variable -> CONST_STRING");
-                    insertarEnPolaca(CONST_STR);
+                    insertarEnPolaca("_"+stringSinComillas);
                :} 
                | ID:ID {:
                          System.out.println("variable -> ID");
@@ -346,24 +352,24 @@ variable       ::= CONST_STR:CONST_STR {:
                | CONST_INT:CONST_INT {: 
                          tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                          System.out.println("variable -> CONST_INT");
-                         insertarEnPolaca(CONST_INT);
+                         insertarEnPolaca("_" +CONST_INT);
                :}
                | CONST_FLOAT:CONST_FLOAT {: 
                          tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                          System.out.println("variable -> CONST_FLOAT");
-                        insertarEnPolaca(CONST_FLOAT);
+                        insertarEnPolaca("_" +CONST_FLOAT);
                :}
                 | CTE_BIN:CTE_BIN {: 
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                        insertarEnPolaca(valorDecimal);
+                        insertarEnPolaca("_" +valorDecimal);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("variable -> CTE_BIN");
                :}
                 | CTE_HEXA:CTE_HEXA {:
                          String valorHexa = CTE_HEXA.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                         insertarEnPolaca(valorDecimal);
+                         insertarEnPolaca("_" +valorDecimal);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("variable -> CTE_HEXA");
                :};
@@ -430,23 +436,23 @@ factor         ::= ID:ID
                :}
                | CONST_INT:CONST_INT 
                {:
-                    insertarEnPolaca(CONST_INT);
+                    insertarEnPolaca("_" +CONST_INT);
                     tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
                     System.out.println("factor -> CONST_INT: " + CONST_INT);
 		          System.out.println("constante entera: " + CONST_INT);
 		     :}
                | CONST_FLOAT:CONST_FLOAT
                {:   
-                    insertarEnPolaca(CONST_FLOAT);
+                    insertarEnPolaca("_" +CONST_FLOAT);
                     tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
                     System.out.println("factor -> CONST_FLOAT: " + CONST_FLOAT);
 		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     :}
                | CONST_STR:CONST_STR
                {:  
-                    insertarEnPolaca(CONST_STR);
+                    insertarEnPolaca("_"+CONST_STR);
                     String stringSinComillas = CONST_STR.substring(1, CONST_STR.length() - 1);
-                    tablaDeSimbolos.agregarEnTabla(stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
+                    tablaDeSimbolos.agregarEnTabla("_" + stringSinComillas.replace(" ", "_"), null, stringSinComillas, stringSinComillas.length());
                     System.out.println("factor -> CONST_STR: " + CONST_STR);
 		          System.out.println("constante CONST_STR: " + CONST_STR);
 		     :}
@@ -454,7 +460,7 @@ factor         ::= ID:ID
                {:
                     String valorBin = CTE_BIN.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                    insertarEnPolaca(valorDecimal);
+                    insertarEnPolaca("_"+valorDecimal);
                     tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                     System.out.println("factor -> cte_bin: " + CTE_BIN);
 		          System.out.println("constante CTE_BIN: " + CTE_BIN);
@@ -463,7 +469,7 @@ factor         ::= ID:ID
                {: 
                     String valorHexa = CTE_HEXA.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                    insertarEnPolaca(valorDecimal);
+                    insertarEnPolaca("_"+valorDecimal);
                     tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                     System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
@@ -523,25 +529,25 @@ factor         ::= ID:ID
                :} ;
 constantes     ::= CONST_INT:CONST_INT {:
                          tablaDeSimbolos.agregarEnTabla("_"+CONST_INT, null, CONST_INT, null);
-                          insertarEnPolaca(CONST_INT);
+                          insertarEnPolaca("_"+CONST_INT);
                           System.out.println("Constante: "+ CONST_INT);
                     :} | CONST_FLOAT:CONST_FLOAT {:
                     
                          tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
-                          insertarEnPolaca(CONST_FLOAT);
+                          insertarEnPolaca("_" +CONST_FLOAT);
                             System.out.println("Constante: "+ CONST_FLOAT);
 
                     :} | CTE_BIN:CTE_BIN {:
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                         insertarEnPolaca(valorDecimal);
+                         insertarEnPolaca("_"+valorDecimal);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_BIN);
 
                     :} | CTE_HEXA:CTE_HEXA {:
                          String valorHexa = CTE_HEXA.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                         insertarEnPolaca(valorDecimal);
+                         insertarEnPolaca("_" +valorDecimal);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_HEXA);
 

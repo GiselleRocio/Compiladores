@@ -20,6 +20,7 @@ public class Polaca {
             for(int x = 0; x < polaca.size(); x++){
                 try {
                     br.write("Posición: "+ x + ", Valor: " + polaca.get(x) + "\n");
+                   //br.write(polaca.get(x)+";"); 
                 } catch (IOException e) {
                     LOGGER.severe("Ocurrio un error al guardar la polaca");
                     e.printStackTrace();

@@ -29,6 +29,15 @@ public class TablaDeSimbolos {
         return listaDeSimbolos.stream().anyMatch(simbolo -> simbolo.getNombre().equals(nombre));
     }
 
+    public Boolean esConstString(String nombre) {
+        for(int i=0; i<listaDeSimbolos.size();i++) {
+            if(listaDeSimbolos.get(i).getNombre().equals(nombre)) {
+                return listaDeSimbolos.get(i).getLongitud() != null;
+            }
+        }
+        return false; 
+    }
+
     public void guardarTabla() {
 
         try (BufferedWriter br = new BufferedWriter(new FileWriter("./src/Grupo02/ts.txt"))) {
@@ -60,7 +69,7 @@ public class TablaDeSimbolos {
             nombre = colaNombre.poll();
             tipoDato = colaTipoDato.poll();
             if(!estaEnTabla(nombre)) {
-                agregarEnTabla("_"+nombre, tipoDato, null, null);
+                agregarEnTabla(nombre, tipoDato, null, null);
             } else {
                 throw new Error("Error de sintaxis: '"+nombre+"' ya esta declarada."); 
             }

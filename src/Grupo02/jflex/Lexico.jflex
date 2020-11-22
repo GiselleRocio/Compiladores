@@ -116,12 +116,11 @@ COMENTARIO      =   "*-".*"-*"
 
 {COMENTARIO}        {}
 
-
 {CTE_HEXA}  	      {return symbol(Simbolos.CTE_HEXA);}
 {CTE_BIN}	      {return symbol(Simbolos.CTE_BIN);}
 {CONST_INT}				{
                             Integer constInt = Integer.parseInt(yytext());
-                            if(constInt <= RANGO_ENTERO){
+                            if(constInt >= -65536 && constInt <= RANGO_ENTERO ){
                                 return symbol(Simbolos.CONST_INT);
 
                             }
@@ -138,7 +137,7 @@ COMENTARIO      =   "*-".*"-*"
                         }
 {CONST_FLOAT}	        {
                             Double constFloat = Double.parseDouble(yytext());
-                            if(constFloat <= 2147483648L)
+                            if(constFloat >= -4294967296L && constFloat <= 4294967296L)
                                 return symbol(Simbolos.CONST_FLOAT);
                             else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de los flotantes");

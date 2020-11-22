@@ -816,7 +816,7 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
           case 51: break;
           case 10:
             { Integer constInt = Integer.parseInt(yytext());
-                            if(constInt <= RANGO_ENTERO){
+                            if(constInt >= -65536 && constInt <= RANGO_ENTERO ){
                                 return symbol(Simbolos.CONST_INT);
 
                             }
@@ -917,7 +917,7 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
           case 69: break;
           case 28:
             { Double constFloat = Double.parseDouble(yytext());
-                            if(constFloat <= 2147483648L)
+                            if(constFloat >= -4294967296L && constFloat <= 4294967296L)
                                 return symbol(Simbolos.CONST_FLOAT);
                             else
                                 throw new Error("La constante [" + yytext() + "] esta fuera del limite de los flotantes");
