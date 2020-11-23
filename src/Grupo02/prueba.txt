@@ -1,9 +1,8 @@
-DIM <actual> AS <Integer>
-actual: 5+2;
-if(actual < 8){
-	PUT "menor a 8";
-} else {
-	PUT "no menor a 8";
+DIM <cont, actual> as <Integer, Integer>
+cont: 0;
+actual: 12;
+while (cont < 2 AND actual > 12){ 
+while(cont > 9 or sarasa <= 9) {
+cont: cont +1; 
 }
-
-PUT "sali del while";
+}

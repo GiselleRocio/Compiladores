@@ -1,8 +1,8 @@
 NOMBRE                        |TIPODATO                      |VALOR                         |LONGITUD                      
+cont                          |Integer                       |-                             |-                             
 actual                        |Integer                       |-                             |-                             
-_5                            |-                             |5                             |-                             
+_0                            |-                             |0                             |-                             
+_12                           |-                             |12                            |-                             
 _2                            |-                             |2                             |-                             
-_8                            |-                             |8                             |-                             
-_str1                         |-                             |menor a 8                     |9                             
-_str2                         |-                             |no menor a 8                  |12                            
-_str3                         |-                             |sali del while                |14                            
+_9                            |-                             |9                             |-                             
+_1                            |-                             |1                             |-                             

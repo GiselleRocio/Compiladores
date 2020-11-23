@@ -15,18 +15,23 @@ action code
      public Queue<String> colaNombres = new LinkedList();
      public Queue<String> colaTipoDato = new LinkedList(); 
      public Stack<Integer> pila = new Stack<Integer>();
+     public Stack<Integer> posicionesBloqueVerdaderoOr = new Stack<Integer>();
+     
+     public Stack<String> etiquetasAssembler = new Stack<String>();
+     public Stack<String> etiquetaPosicionBloqueVerdaderoOr = new Stack<String>(); 
+     public int contadorEtiquetas = 0; 
+
+     public Stack<Integer> pilaEtiquetasIf = new Stack<Integer>();
      public ArrayList<String> polaca = new ArrayList<String>();
      public String comparadorString = "";
      public int hayDobleComparacion= 0;
      public int isOr = 0;
-     public Stack<Integer> posicionesBloqueVerdaderoOr = new Stack<Integer>();
      public int contador = 0;
      public int constanteAContar = 0;  
      public Polaca polacaManager = new Polaca();
      private int contEtiquetaWhile = 0;
      private int contEtCond = 0; //usamos etiquetas para cada condicion, en vez de if
      private int contadorCteString = 1;
-     public Stack<Integer> pilaEtiquetasIf = new Stack<Integer>();
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -155,43 +160,64 @@ asig           ::= ID:ID OP_AS:OP_AS expresion
 
 iteracion      ::= WHILE {:
                          pila.push(polaca.size());
-                         insertarEnPolaca("ET_while"+contEtiquetaWhile);
-                         contEtiquetaWhile++;
+                       //  insertarEnPolaca("ET_while"+contEtiquetaWhile);
+                         // contEtiquetaWhile++;
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                         insertarEnPolaca(etiqueta);
+                         etiquetasAssembler.push(etiqueta);
+                         contadorEtiquetas++;
+
                          // por ahora por ser unica condicion lo hacemos aca, habra que ver doble comparacion y el if
-                         String etiquetaCond = "ET_cond"+contEtCond;
-                         contEtCond++;
-                         insertarEnPolaca(etiquetaCond);
+                         // String etiquetaCond = "ET_cond"+contEtCond;
+                         // contEtCond++;
+                         // insertarEnPolaca(etiquetaCond);
                          // termina
                          RESULT = new Symbol(-1); 
                     :}PA condicion {:
+ 
                          if(isOr != 0){
-                           posicionesBloqueVerdaderoOr.push(polaca.size());
+                              // posicionesBloqueVerdaderoOr.push(polaca.size());
+                              String etiqueta = "ET_aux" + contadorEtiquetas;
+                              insertarEnPolaca(etiqueta);
+                              etiquetaPosicionBloqueVerdaderoOr.push(etiqueta);
+                              contadorEtiquetas++; // ACA ESTA EL ERRORRR va contadorEtiquetas++;
                          }
                          RESULT = new Symbol(-1); 
-                    :}PC LA prog {:
-                         insertarEnPolaca("BI");
+                    :}PC LA prog {: 
+                         insertarEnPolaca("BI"); 
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                         etiquetasAssembler.push(etiqueta);
+                         contadorEtiquetas++;
                          if(hayDobleComparacion != 0){
                             // aca hay que ver lo de las etiquetas
-                             insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                           //  insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                              String etiquetaAParteFalsa = etiquetasAssembler.pop();
+                              insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
                               if(isOr != 0){
-                                   insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop());
+                                  // insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop());
+                                  insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                                    isOr--; 
                               } else {
-                                   insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                              //     insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
+                                     insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
+
                               }
                               hayDobleComparacion--; 
                          } else {
-                            insertarEnPolaca("ET_end_cond" + hayDobleComparacion, pila.pop() );
+                              System.out.println(etiquetasAssembler);
+                              insertarEnPolaca(etiquetasAssembler.pop(), pila.pop());
+                         //   insertarEnPolaca("ET_end_cond" + polaca.size() + 1, pila.pop() );
                          //insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() ); // aca iria el fin de cond, hay que tener el numero
                          }
-
+                         insertarEnPolaca(etiquetasAssembler.pop());
+                         insertarEnPolaca(etiqueta);
+                
                         //insertarEnPolaca(String.valueOf(pila.pop()));
-                        insertarEnPolaca(polaca.get(pila.pop())); // inserto directamente la etiqueta, no el numero
+                       // insertarEnPolaca(polaca.get(pila.pop())); // inserto directamente la etiqueta, no el numero
 
                          RESULT = new Symbol(-1); 
                     :}  LC
                     {:
-                        insertarEnPolaca("ET_end_cond"+ hayDobleComparacion);
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
 seleccion      ::= IF {:

@@ -6,13 +6,13 @@ include macros2.asm
 .STACK 200h ;Bytes en el Stack
 
 .DATA
+	cont	dd	?
 	actual	dd	?
-	_5	dd	5.0
+	_0	dd	0.0
+	_12	dd	12.0
 	_2	dd	2.0
-	_8	dd	8.0
-	_str1	db	"menor a 8",'$',9 dup(?)
-	_str2	db	"no menor a 8",'$',12 dup(?)
-	_str3	db	"sali del while",'$',14 dup(?)
+	_9	dd	9.0
+	_1	dd	1.0
 
 
 .CODE
@@ -22,28 +22,53 @@ start:
 	MOV DS,EAX
 	MOV ES,EAX
 
-	FLD _5
-	FLD _2
-	FADD
+	FLD _0
+	FSTP cont
+	FLD _12
 	FSTP actual
-ET_cond0:
-	FLD actual
-	FLD _8
+ET_aux0:
+	FLD cont
+	FLD _2
 	FXCH
 	FCOMP
 	FSTSW AX
 	SAHF
 	FFREE
-	JAE ET_else_cond0
-	DisplayString _str1
-	newline 1
-	JMP ET_end_cond0
-ET_else_cond0:
-	DisplayString _str2
-	newline 1
-ET_end_cond0:
-	DisplayString _str3
-	newline 1
+	JAE 	FLD  
+	FLD actual
+	FLD _12
+	FXCH
+	FCOMP
+	FSTSW AX
+	SAHF
+	FFREE
+	JBE ET_aux4
+ET_aux4:
+	FLD cont
+	FLD _9
+	FXCH
+	FCOMP
+	FSTSW AX
+	SAHF
+	FFREE
+	JA ET_aux2
+	FLD sarasa
+	FLD _9
+	FXCH
+	FCOMP
+	FSTSW AX
+	SAHF
+	FFREE
+	JA ET_aux3
+ET_aux2:
+	FLD cont
+	FLD _1
+	FADD
+	FSTP cont
+	JMP ET_aux1
+ET_aux3:
+	JMP ET_aux0
+ET_aux4:
 	MOV EAX, 4C00h
 	INT 21h
 
