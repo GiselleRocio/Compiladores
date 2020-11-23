@@ -39,7 +39,7 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\107\000\002\002\004\000\002\002\003\000\002\003" +
+    "\000\110\000\002\002\004\000\002\002\003\000\002\003" +
     "\003\000\002\003\004\000\002\005\004\000\002\005\003" +
     "\000\002\005\003\000\002\005\004\000\002\005\004\000" +
     "\002\005\003\000\002\004\005\000\002\031\002\000\002" +
@@ -59,9 +59,9 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\003\000\002\025\003\000\002\011\003\000\002\011\003" +
     "\000\002\011\003\000\002\011\003\000\002\011\003\000" +
     "\002\011\003\000\002\011\005\000\002\040\002\000\002" +
-    "\011\013\000\002\027\005\000\002\027\003\000\002\030" +
+    "\041\002\000\002\011\014\000\002\027\005\000\002\027" +
     "\003\000\002\030\003\000\002\030\003\000\002\030\003" +
-    "" });
+    "\000\002\030\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -69,39 +69,39 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\173\000\016\004\006\005\022\006\004\013\005\014" +
-    "\014\045\020\001\002\000\004\023\156\001\002\000\004" +
-    "\032\ufff6\001\002\000\016\045\136\046\144\047\142\050" +
-    "\140\051\137\052\143\001\002\000\004\031\135\001\002" +
+    "\000\174\000\016\004\006\005\022\006\004\013\005\014" +
+    "\014\045\020\001\002\000\004\023\157\001\002\000\004" +
+    "\032\ufff6\001\002\000\016\045\137\046\145\047\143\050" +
+    "\141\051\140\052\144\001\002\000\004\031\136\001\002" +
     "\000\022\002\ufff8\004\ufff8\005\ufff8\006\ufff8\013\ufff8\014" +
     "\ufff8\035\ufff8\045\ufff8\001\002\000\022\002\ufffb\004\ufffb" +
     "\005\ufffb\006\ufffb\013\ufffb\014\ufffb\035\ufffb\045\ufffb\001" +
-    "\002\000\004\002\134\001\002\000\020\002\000\004\006" +
+    "\002\000\004\002\135\001\002\000\020\002\000\004\006" +
     "\005\022\006\004\013\005\014\014\045\020\001\002\000" +
-    "\004\032\ufff2\001\002\000\004\031\072\001\002\000\022" +
+    "\004\032\ufff2\001\002\000\004\031\073\001\002\000\022" +
     "\002\uffff\004\uffff\005\uffff\006\uffff\013\uffff\014\uffff\035" +
     "\uffff\045\uffff\001\002\000\022\002\ufffc\004\ufffc\005\ufffc" +
     "\006\ufffc\013\ufffc\014\ufffc\035\ufffc\045\ufffc\001\002\000" +
     "\004\016\025\001\002\000\004\031\024\001\002\000\004" +
     "\045\023\001\002\000\004\031\uffd2\001\002\000\022\002" +
     "\ufffd\004\ufffd\005\ufffd\006\ufffd\013\ufffd\014\ufffd\035\ufffd" +
-    "\045\ufffd\001\002\000\022\032\031\044\026\045\035\046" +
-    "\034\047\032\050\040\051\027\052\037\001\002\000\004" +
-    "\032\053\001\002\000\036\017\uffc4\020\uffc4\021\uffc4\022" +
+    "\045\ufffd\001\002\000\022\032\031\044\026\045\034\046" +
+    "\035\047\032\050\040\051\027\052\037\001\002\000\004" +
+    "\032\uffc2\001\002\000\036\017\uffc4\020\uffc4\021\uffc4\022" +
     "\uffc4\023\uffc4\024\uffc4\025\uffc4\026\uffc4\027\uffc4\031\uffc4" +
     "\033\uffc4\040\uffc4\041\uffc4\042\uffc4\001\002\000\036\017" +
     "\uffdd\020\uffdd\021\044\022\045\023\uffdd\024\uffdd\025\uffdd" +
     "\026\uffdd\027\uffdd\031\uffdd\033\uffdd\040\uffdd\041\uffdd\042" +
-    "\uffdd\001\002\000\022\032\031\044\026\045\035\046\034" +
+    "\uffdd\001\002\000\022\032\031\044\026\045\034\046\035" +
     "\047\032\050\040\051\027\052\037\001\002\000\036\017" +
     "\uffc7\020\uffc7\021\uffc7\022\uffc7\023\uffc7\024\uffc7\025\uffc7" +
     "\026\uffc7\027\uffc7\031\uffc7\033\uffc7\040\uffc7\041\uffc7\042" +
     "\uffc7\001\002\000\010\017\042\020\041\031\ufff7\001\002" +
-    "\000\036\017\uffc8\020\uffc8\021\uffc8\022\uffc8\023\uffc8\024" +
-    "\uffc8\025\uffc8\026\uffc8\027\uffc8\031\uffc8\033\uffc8\040\uffc8" +
-    "\041\uffc8\042\uffc8\001\002\000\036\017\uffc9\020\uffc9\021" +
-    "\uffc9\022\uffc9\023\uffc9\024\uffc9\025\uffc9\026\uffc9\027\uffc9" +
-    "\031\uffc9\033\uffc9\040\uffc9\041\uffc9\042\uffc9\001\002\000" +
+    "\000\036\017\uffc9\020\uffc9\021\uffc9\022\uffc9\023\uffc9\024" +
+    "\uffc9\025\uffc9\026\uffc9\027\uffc9\031\uffc9\033\uffc9\040\uffc9" +
+    "\041\uffc9\042\uffc9\001\002\000\036\017\uffc8\020\uffc8\021" +
+    "\uffc8\022\uffc8\023\uffc8\024\uffc8\025\uffc8\026\uffc8\027\uffc8" +
+    "\031\uffc8\033\uffc8\040\uffc8\041\uffc8\042\uffc8\001\002\000" +
     "\036\017\uffda\020\uffda\021\uffda\022\uffda\023\uffda\024\uffda" +
     "\025\uffda\026\uffda\027\uffda\031\uffda\033\uffda\040\uffda\041" +
     "\uffda\042\uffda\001\002\000\036\017\uffc5\020\uffc5\021\uffc5" +
@@ -109,15 +109,15 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\uffc5\033\uffc5\040\uffc5\041\uffc5\042\uffc5\001\002\000\036" +
     "\017\uffc6\020\uffc6\021\uffc6\022\uffc6\023\uffc6\024\uffc6\025" +
     "\uffc6\026\uffc6\027\uffc6\031\uffc6\033\uffc6\040\uffc6\041\uffc6" +
-    "\042\uffc6\001\002\000\022\032\031\044\026\045\035\046" +
-    "\034\047\032\050\040\051\027\052\037\001\002\000\022" +
-    "\032\031\044\026\045\035\046\034\047\032\050\040\051" +
+    "\042\uffc6\001\002\000\022\032\031\044\026\045\034\046" +
+    "\035\047\032\050\040\051\027\052\037\001\002\000\022" +
+    "\032\031\044\026\045\034\046\035\047\032\050\040\051" +
     "\027\052\037\001\002\000\036\017\uffdf\020\uffdf\021\044" +
     "\022\045\023\uffdf\024\uffdf\025\uffdf\026\uffdf\027\uffdf\031" +
     "\uffdf\033\uffdf\040\uffdf\041\uffdf\042\uffdf\001\002\000\022" +
-    "\032\031\044\026\045\035\046\034\047\032\050\040\051" +
-    "\027\052\037\001\002\000\022\032\031\044\026\045\035" +
-    "\046\034\047\032\050\040\051\027\052\037\001\002\000" +
+    "\032\031\044\026\045\034\046\035\047\032\050\040\051" +
+    "\027\052\037\001\002\000\022\032\031\044\026\045\034" +
+    "\046\035\047\032\050\040\051\027\052\037\001\002\000" +
     "\036\017\uffdc\020\uffdc\021\uffdc\022\uffdc\023\uffdc\024\uffdc" +
     "\025\uffdc\026\uffdc\027\uffdc\031\uffdc\033\uffdc\040\uffdc\041" +
     "\uffdc\042\uffdc\001\002\000\036\017\uffdb\020\uffdb\021\uffdb" +
@@ -128,85 +128,85 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
     "\042\uffde\001\002\000\010\017\042\020\041\033\052\001" +
     "\002\000\036\017\uffc3\020\uffc3\021\uffc3\022\uffc3\023\uffc3" +
     "\024\uffc3\025\uffc3\026\uffc3\027\uffc3\031\uffc3\033\uffc3\040" +
-    "\uffc3\041\uffc3\042\uffc3\001\002\000\022\032\031\044\026" +
-    "\045\035\046\034\047\032\050\040\051\027\052\037\001" +
-    "\002\000\010\017\042\020\041\031\055\001\002\000\004" +
-    "\036\uffc2\001\002\000\004\036\057\001\002\000\012\046" +
-    "\065\047\063\051\061\052\064\001\002\000\006\030\066" +
-    "\037\067\001\002\000\006\030\uffbb\037\uffbb\001\002\000" +
-    "\006\030\uffbf\037\uffbf\001\002\000\006\030\uffbd\037\uffbd" +
-    "\001\002\000\006\030\uffbc\037\uffbc\001\002\000\006\030" +
-    "\uffbe\037\uffbe\001\002\000\012\046\065\047\063\051\061" +
-    "\052\064\001\002\000\004\033\070\001\002\000\036\017" +
-    "\uffc1\020\uffc1\021\uffc1\022\uffc1\023\uffc1\024\uffc1\025\uffc1" +
-    "\026\uffc1\027\uffc1\031\uffc1\033\uffc1\040\uffc1\041\uffc1\042" +
-    "\uffc1\001\002\000\006\030\uffc0\037\uffc0\001\002\000\022" +
-    "\002\ufffa\004\ufffa\005\ufffa\006\ufffa\013\ufffa\014\ufffa\035" +
-    "\ufffa\045\ufffa\001\002\000\004\032\074\001\002\000\024" +
-    "\032\031\043\075\044\026\045\035\046\034\047\032\050" +
-    "\040\051\027\052\037\001\002\000\022\032\031\044\026" +
-    "\045\035\046\034\047\032\050\040\051\027\052\037\001" +
-    "\002\000\010\033\uffeb\040\126\041\127\001\002\000\022" +
-    "\017\042\020\041\023\124\024\116\025\123\026\121\027" +
-    "\122\042\117\001\002\000\004\033\101\001\002\000\004" +
-    "\034\102\001\002\000\016\004\ufff1\005\ufff1\006\ufff1\013" +
-    "\ufff1\014\ufff1\045\ufff1\001\002\000\016\004\006\005\022" +
-    "\006\004\013\005\014\014\045\020\001\002\000\020\004" +
-    "\006\005\022\006\004\013\005\014\014\035\106\045\020" +
-    "\001\002\000\022\002\ufffe\004\ufffe\005\ufffe\006\ufffe\013" +
-    "\ufffe\014\ufffe\035\ufffe\045\ufffe\001\002\000\024\002\uffec" +
-    "\004\uffec\005\uffec\006\uffec\013\uffec\014\uffec\015\107\035" +
-    "\uffec\045\uffec\001\002\000\004\034\uffef\001\002\000\022" +
-    "\002\ufff0\004\ufff0\005\ufff0\006\ufff0\013\ufff0\014\ufff0\035" +
-    "\ufff0\045\ufff0\001\002\000\022\002\uffed\004\uffed\005\uffed" +
-    "\006\uffed\013\uffed\014\uffed\035\uffed\045\uffed\001\002\000" +
-    "\004\034\113\001\002\000\016\004\006\005\022\006\004" +
-    "\013\005\014\014\045\020\001\002\000\020\004\006\005" +
-    "\022\006\004\013\005\014\014\035\115\045\020\001\002" +
-    "\000\022\002\uffee\004\uffee\005\uffee\006\uffee\013\uffee\014" +
-    "\uffee\035\uffee\045\uffee\001\002\000\022\032\uffe4\044\uffe4" +
-    "\045\uffe4\046\uffe4\047\uffe4\050\uffe4\051\uffe4\052\uffe4\001" +
-    "\002\000\022\032\uffe1\044\uffe1\045\uffe1\046\uffe1\047\uffe1" +
-    "\050\uffe1\051\uffe1\052\uffe1\001\002\000\022\032\031\044" +
-    "\026\045\035\046\034\047\032\050\040\051\027\052\037" +
-    "\001\002\000\022\032\uffe5\044\uffe5\045\uffe5\046\uffe5\047" +
-    "\uffe5\050\uffe5\051\uffe5\052\uffe5\001\002\000\022\032\uffe0" +
-    "\044\uffe0\045\uffe0\046\uffe0\047\uffe0\050\uffe0\051\uffe0\052" +
-    "\uffe0\001\002\000\022\032\uffe3\044\uffe3\045\uffe3\046\uffe3" +
-    "\047\uffe3\050\uffe3\051\uffe3\052\uffe3\001\002\000\022\032" +
-    "\uffe2\044\uffe2\045\uffe2\046\uffe2\047\uffe2\050\uffe2\051\uffe2" +
-    "\052\uffe2\001\002\000\014\017\042\020\041\033\uffe6\040" +
-    "\uffe6\041\uffe6\001\002\000\022\032\031\044\026\045\035" +
-    "\046\034\047\032\050\040\051\027\052\037\001\002\000" +
-    "\022\032\uffe9\044\uffe9\045\uffe9\046\uffe9\047\uffe9\050\uffe9" +
-    "\051\uffe9\052\uffe9\001\002\000\022\032\031\044\026\045" +
-    "\035\046\034\047\032\050\040\051\027\052\037\001\002" +
-    "\000\004\033\uffe8\001\002\000\004\033\uffea\001\002\000" +
-    "\004\033\uffe7\001\002\000\004\002\001\001\002\000\022" +
-    "\002\ufff9\004\ufff9\005\ufff9\006\ufff9\013\ufff9\014\ufff9\035" +
-    "\ufff9\045\ufff9\001\002\000\004\031\uffd8\001\002\000\004" +
-    "\031\uffd4\001\002\000\004\031\uffd9\001\002\000\004\031" +
-    "\uffd3\001\002\000\004\031\uffd6\001\002\000\004\031\uffd5" +
-    "\001\002\000\004\031\uffd7\001\002\000\004\032\146\001" +
-    "\002\000\024\032\031\043\075\044\026\045\035\046\034" +
-    "\047\032\050\040\051\027\052\037\001\002\000\004\033" +
-    "\ufff5\001\002\000\004\033\151\001\002\000\004\034\152" +
-    "\001\002\000\016\004\006\005\022\006\004\013\005\014" +
-    "\014\045\020\001\002\000\020\004\006\005\022\006\004" +
-    "\013\005\014\014\035\ufff4\045\020\001\002\000\004\035" +
-    "\155\001\002\000\022\002\ufff3\004\ufff3\005\ufff3\006\ufff3" +
-    "\013\ufff3\014\ufff3\035\ufff3\045\ufff3\001\002\000\004\045" +
-    "\157\001\002\000\006\025\uffcf\030\uffcf\001\002\000\006" +
-    "\025\162\030\161\001\002\000\004\045\175\001\002\000" +
-    "\004\007\163\001\002\000\004\023\164\001\002\000\010" +
-    "\010\165\011\166\012\170\001\002\000\006\025\uffcc\030" +
-    "\uffcc\001\002\000\006\025\uffca\030\uffca\001\002\000\006" +
-    "\025\uffcd\030\uffcd\001\002\000\006\025\uffcb\030\uffcb\001" +
-    "\002\000\006\025\173\030\172\001\002\000\010\010\165" +
-    "\011\166\012\170\001\002\000\022\002\uffd1\004\uffd1\005" +
-    "\uffd1\006\uffd1\013\uffd1\014\uffd1\035\uffd1\045\uffd1\001\002" +
-    "\000\006\025\uffce\030\uffce\001\002\000\006\025\uffd0\030" +
-    "\uffd0\001\002" });
+    "\uffc3\041\uffc3\042\uffc3\001\002\000\004\032\054\001\002" +
+    "\000\022\032\031\044\026\045\034\046\035\047\032\050" +
+    "\040\051\027\052\037\001\002\000\010\017\042\020\041" +
+    "\031\056\001\002\000\004\036\uffc1\001\002\000\004\036" +
+    "\060\001\002\000\012\046\066\047\063\051\062\052\065" +
+    "\001\002\000\006\030\067\037\070\001\002\000\006\030" +
+    "\uffba\037\uffba\001\002\000\006\030\uffbc\037\uffbc\001\002" +
+    "\000\006\030\uffbe\037\uffbe\001\002\000\006\030\uffbb\037" +
+    "\uffbb\001\002\000\006\030\uffbd\037\uffbd\001\002\000\012" +
+    "\046\066\047\063\051\062\052\065\001\002\000\004\033" +
+    "\071\001\002\000\036\017\uffc0\020\uffc0\021\uffc0\022\uffc0" +
+    "\023\uffc0\024\uffc0\025\uffc0\026\uffc0\027\uffc0\031\uffc0\033" +
+    "\uffc0\040\uffc0\041\uffc0\042\uffc0\001\002\000\006\030\uffbf" +
+    "\037\uffbf\001\002\000\022\002\ufffa\004\ufffa\005\ufffa\006" +
+    "\ufffa\013\ufffa\014\ufffa\035\ufffa\045\ufffa\001\002\000\004" +
+    "\032\075\001\002\000\024\032\031\043\076\044\026\045" +
+    "\034\046\035\047\032\050\040\051\027\052\037\001\002" +
+    "\000\022\032\031\044\026\045\034\046\035\047\032\050" +
+    "\040\051\027\052\037\001\002\000\010\033\uffeb\040\127" +
+    "\041\130\001\002\000\022\017\042\020\041\023\125\024" +
+    "\117\025\124\026\122\027\123\042\120\001\002\000\004" +
+    "\033\102\001\002\000\004\034\103\001\002\000\016\004" +
+    "\ufff1\005\ufff1\006\ufff1\013\ufff1\014\ufff1\045\ufff1\001\002" +
+    "\000\016\004\006\005\022\006\004\013\005\014\014\045" +
+    "\020\001\002\000\020\004\006\005\022\006\004\013\005" +
+    "\014\014\035\107\045\020\001\002\000\022\002\ufffe\004" +
+    "\ufffe\005\ufffe\006\ufffe\013\ufffe\014\ufffe\035\ufffe\045\ufffe" +
+    "\001\002\000\024\002\uffec\004\uffec\005\uffec\006\uffec\013" +
+    "\uffec\014\uffec\015\110\035\uffec\045\uffec\001\002\000\004" +
+    "\034\uffef\001\002\000\022\002\ufff0\004\ufff0\005\ufff0\006" +
+    "\ufff0\013\ufff0\014\ufff0\035\ufff0\045\ufff0\001\002\000\022" +
+    "\002\uffed\004\uffed\005\uffed\006\uffed\013\uffed\014\uffed\035" +
+    "\uffed\045\uffed\001\002\000\004\034\114\001\002\000\016" +
+    "\004\006\005\022\006\004\013\005\014\014\045\020\001" +
+    "\002\000\020\004\006\005\022\006\004\013\005\014\014" +
+    "\035\116\045\020\001\002\000\022\002\uffee\004\uffee\005" +
+    "\uffee\006\uffee\013\uffee\014\uffee\035\uffee\045\uffee\001\002" +
+    "\000\022\032\uffe4\044\uffe4\045\uffe4\046\uffe4\047\uffe4\050" +
+    "\uffe4\051\uffe4\052\uffe4\001\002\000\022\032\uffe1\044\uffe1" +
+    "\045\uffe1\046\uffe1\047\uffe1\050\uffe1\051\uffe1\052\uffe1\001" +
+    "\002\000\022\032\031\044\026\045\034\046\035\047\032" +
+    "\050\040\051\027\052\037\001\002\000\022\032\uffe5\044" +
+    "\uffe5\045\uffe5\046\uffe5\047\uffe5\050\uffe5\051\uffe5\052\uffe5" +
+    "\001\002\000\022\032\uffe0\044\uffe0\045\uffe0\046\uffe0\047" +
+    "\uffe0\050\uffe0\051\uffe0\052\uffe0\001\002\000\022\032\uffe3" +
+    "\044\uffe3\045\uffe3\046\uffe3\047\uffe3\050\uffe3\051\uffe3\052" +
+    "\uffe3\001\002\000\022\032\uffe2\044\uffe2\045\uffe2\046\uffe2" +
+    "\047\uffe2\050\uffe2\051\uffe2\052\uffe2\001\002\000\014\017" +
+    "\042\020\041\033\uffe6\040\uffe6\041\uffe6\001\002\000\022" +
+    "\032\031\044\026\045\034\046\035\047\032\050\040\051" +
+    "\027\052\037\001\002\000\022\032\uffe9\044\uffe9\045\uffe9" +
+    "\046\uffe9\047\uffe9\050\uffe9\051\uffe9\052\uffe9\001\002\000" +
+    "\022\032\031\044\026\045\034\046\035\047\032\050\040" +
+    "\051\027\052\037\001\002\000\004\033\uffe8\001\002\000" +
+    "\004\033\uffea\001\002\000\004\033\uffe7\001\002\000\004" +
+    "\002\001\001\002\000\022\002\ufff9\004\ufff9\005\ufff9\006" +
+    "\ufff9\013\ufff9\014\ufff9\035\ufff9\045\ufff9\001\002\000\004" +
+    "\031\uffd8\001\002\000\004\031\uffd4\001\002\000\004\031" +
+    "\uffd9\001\002\000\004\031\uffd3\001\002\000\004\031\uffd6" +
+    "\001\002\000\004\031\uffd5\001\002\000\004\031\uffd7\001" +
+    "\002\000\004\032\147\001\002\000\024\032\031\043\076" +
+    "\044\026\045\034\046\035\047\032\050\040\051\027\052" +
+    "\037\001\002\000\004\033\ufff5\001\002\000\004\033\152" +
+    "\001\002\000\004\034\153\001\002\000\016\004\006\005" +
+    "\022\006\004\013\005\014\014\045\020\001\002\000\020" +
+    "\004\006\005\022\006\004\013\005\014\014\035\ufff4\045" +
+    "\020\001\002\000\004\035\156\001\002\000\022\002\ufff3" +
+    "\004\ufff3\005\ufff3\006\ufff3\013\ufff3\014\ufff3\035\ufff3\045" +
+    "\ufff3\001\002\000\004\045\160\001\002\000\006\025\uffcf" +
+    "\030\uffcf\001\002\000\006\025\163\030\162\001\002\000" +
+    "\004\045\176\001\002\000\004\007\164\001\002\000\004" +
+    "\023\165\001\002\000\010\010\166\011\167\012\171\001" +
+    "\002\000\006\025\uffcc\030\uffcc\001\002\000\006\025\uffca" +
+    "\030\uffca\001\002\000\006\025\uffcd\030\uffcd\001\002\000" +
+    "\006\025\uffcb\030\uffcb\001\002\000\006\025\174\030\173" +
+    "\001\002\000\010\010\166\011\167\012\171\001\002\000" +
+    "\022\002\uffd1\004\uffd1\005\uffd1\006\uffd1\013\uffd1\014\uffd1" +
+    "\035\uffd1\045\uffd1\001\002\000\006\025\uffce\030\uffce\001" +
+    "\002\000\006\025\uffd0\030\uffd0\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -214,63 +214,63 @@ public class AnalizadorSintactico extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\173\000\024\002\011\003\012\004\020\005\015\012" +
+    "\000\174\000\024\002\011\003\012\004\020\005\015\012" +
     "\007\013\016\020\010\021\014\022\006\001\001\000\002" +
-    "\001\001\000\004\031\144\001\001\000\004\026\140\001" +
+    "\001\001\000\004\031\145\001\001\000\004\026\141\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\020\004\020\005\104\012\007\013" +
-    "\016\020\010\021\014\022\006\001\001\000\004\034\072" +
+    "\000\002\001\001\000\020\004\020\005\105\012\007\013" +
+    "\016\020\010\021\014\022\006\001\001\000\004\034\073" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\010\007\032\010" +
-    "\027\011\035\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\010\007\050\010\027\011\035\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\006\010\047\011\035\001\001\000\006" +
-    "\010\042\011\035\001\001\000\002\001\001\000\004\011" +
-    "\046\001\001\000\004\011\045\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\010\007\053\010\027\011\035\001\001" +
-    "\000\002\001\001\000\004\040\055\001\001\000\002\001" +
-    "\001\000\006\027\057\030\061\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\030\070\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\014\007\076\010\027" +
-    "\011\035\014\077\015\075\001\001\000\012\007\076\010" +
-    "\027\011\035\015\132\001\001\000\002\001\001\000\004" +
-    "\016\117\001\001\000\002\001\001\000\002\001\001\000" +
-    "\004\035\102\001\001\000\022\003\103\004\020\005\015" +
-    "\012\007\013\016\020\010\021\014\022\006\001\001\000" +
-    "\020\004\020\005\104\012\007\013\016\020\010\021\014" +
-    "\022\006\001\001\000\002\001\001\000\006\006\110\017" +
-    "\107\001\001\000\004\036\111\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\022\003\113\004" +
-    "\020\005\015\012\007\013\016\020\010\021\014\022\006" +
-    "\001\001\000\020\004\020\005\104\012\007\013\016\020" +
-    "\010\021\014\022\006\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\010\007\124\010\027\011" +
+    "\027\011\035\001\001\000\004\040\052\001\001\000\002" +
+    "\001\001\000\002\001\001\000\010\007\050\010\027\011" +
     "\035\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\012\007" +
-    "\076\010\027\011\035\015\131\001\001\000\004\037\127" +
-    "\001\001\000\012\007\076\010\027\011\035\015\130\001" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\006\010\047\011\035\001\001" +
+    "\000\006\010\042\011\035\001\001\000\002\001\001\000" +
+    "\004\011\046\001\001\000\004\011\045\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\010\007\054" +
+    "\010\027\011\035\001\001\000\002\001\001\000\004\041" +
+    "\056\001\001\000\002\001\001\000\006\027\060\030\063" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\030\071\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\014\007\077\010\027\011\035\014\100\015\076\001" +
+    "\001\000\012\007\077\010\027\011\035\015\133\001\001" +
+    "\000\002\001\001\000\004\016\120\001\001\000\002\001" +
+    "\001\000\002\001\001\000\004\035\103\001\001\000\022" +
+    "\003\104\004\020\005\015\012\007\013\016\020\010\021" +
+    "\014\022\006\001\001\000\020\004\020\005\105\012\007" +
+    "\013\016\020\010\021\014\022\006\001\001\000\002\001" +
+    "\001\000\006\006\111\017\110\001\001\000\004\036\112" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\022\003\114\004\020\005\015\012\007\013\016" +
+    "\020\010\021\014\022\006\001\001\000\020\004\020\005" +
+    "\105\012\007\013\016\020\010\021\014\022\006\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\010\007\125\010\027\011\035\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\012\007\077\010\027\011\035\015\132" +
+    "\001\001\000\004\037\130\001\001\000\012\007\077\010" +
+    "\027\011\035\015\131\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\002\001\001\000\002\001\001\000\014\007\077\010\027" +
+    "\011\035\014\147\015\076\001\001\000\004\032\150\001" +
+    "\001\000\002\001\001\000\002\001\001\000\022\003\153" +
+    "\004\020\005\015\012\007\013\016\020\010\021\014\022" +
+    "\006\001\001\000\022\004\020\005\105\012\007\013\016" +
+    "\020\010\021\014\022\006\033\154\001\001\000\002\001" +
+    "\001\000\002\001\001\000\004\023\160\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\014\007\076\010\027\011\035\014\146\015\075" +
-    "\001\001\000\004\032\147\001\001\000\002\001\001\000" +
-    "\002\001\001\000\022\003\152\004\020\005\015\012\007" +
-    "\013\016\020\010\021\014\022\006\001\001\000\022\004" +
-    "\020\005\104\012\007\013\016\020\010\021\014\022\006" +
-    "\033\153\001\001\000\002\001\001\000\002\001\001\000" +
-    "\004\023\157\001\001\000\002\001\001\000\002\001\001" +
+    "\001\000\002\001\001\000\006\024\171\025\167\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\006\024\170\025\166\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\025\173\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001" });
+    "\002\001\001\000\002\001\001\000\004\025\174\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -329,23 +329,21 @@ class CUP$AnalizadorSintactico$actions {
      public Queue<String> colaNombres = new LinkedList();
      public Queue<String> colaTipoDato = new LinkedList(); 
      public Stack<Integer> pila = new Stack<Integer>();
-     public Stack<Integer> posicionesBloqueVerdaderoOr = new Stack<Integer>();
      
      public Stack<String> etiquetasAssembler = new Stack<String>();
      public Stack<String> etiquetaPosicionBloqueVerdaderoOr = new Stack<String>(); 
      public int contadorEtiquetas = 0; 
+     public Stack<Boolean> pilaDobleComparacion = new Stack<Boolean>();
+     public Stack<Boolean> pilaIsOr = new Stack<Boolean>();
 
-     public Stack<Integer> pilaEtiquetasIf = new Stack<Integer>();
      public ArrayList<String> polaca = new ArrayList<String>();
      public String comparadorString = "";
-     public int hayDobleComparacion= 0;
-     public int isOr = 0;
+     
      public int contador = 0;
      public int constanteAContar = 0;  
      public Polaca polacaManager = new Polaca();
-     private int contEtiquetaWhile = 0;
-     private int contEtCond = 0; //usamos etiquetas para cada condicion, en vez de if
      private int contadorCteString = 1;
+     public int contadorAux = 0;
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -551,19 +549,11 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 
-                         pila.push(polaca.size());
-                       //  insertarEnPolaca("ET_while"+contEtiquetaWhile);
-                         // contEtiquetaWhile++;
+
                          String etiqueta = "ET_aux" + contadorEtiquetas;
                          insertarEnPolaca(etiqueta);
                          etiquetasAssembler.push(etiqueta);
                          contadorEtiquetas++;
-
-                         // por ahora por ser unica condicion lo hacemos aca, habra que ver doble comparacion y el if
-                         // String etiquetaCond = "ET_cond"+contEtCond;
-                         // contEtCond++;
-                         // insertarEnPolaca(etiquetaCond);
-                         // termina
                          RESULT = new Symbol(-1); 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$0",23, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -575,13 +565,11 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =(Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)).value;
 
- 
-                         if(isOr != 0){
-                              // posicionesBloqueVerdaderoOr.push(polaca.size());
+                         if(pilaIsOr.size() != 0 && pilaIsOr.peek()){ //Si es or, se mete una etiqueta al comienzo de la parte verdadera
                               String etiqueta = "ET_aux" + contadorEtiquetas;
                               insertarEnPolaca(etiqueta);
                               etiquetaPosicionBloqueVerdaderoOr.push(etiqueta);
-                              contadorEtiquetas++; // ACA ESTA EL ERRORRR va contadorEtiquetas++;
+                              contadorEtiquetas++; 
                          }
                          RESULT = new Symbol(-1); 
                     
@@ -598,33 +586,22 @@ class CUP$AnalizadorSintactico$actions {
                          String etiqueta = "ET_aux" + contadorEtiquetas;
                          etiquetasAssembler.push(etiqueta);
                          contadorEtiquetas++;
-                         if(hayDobleComparacion != 0){
-                            // aca hay que ver lo de las etiquetas
-                           //  insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
-                              String etiquetaAParteFalsa = etiquetasAssembler.pop();
+                         if(pilaDobleComparacion.pop()){
+                            String etiquetaAParteFalsa = etiquetasAssembler.pop();
                               insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
-                              if(isOr != 0){
-                                  // insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop());
-                                  insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
-                                   isOr--; 
+                              if(pilaIsOr.pop()){
+                                 insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                               } else {
-                              //     insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
-                                     insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
+                              insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
 
                               }
-                              hayDobleComparacion--; 
                          } else {
                               System.out.println(etiquetasAssembler);
-                              insertarEnPolaca(etiquetasAssembler.pop(), pila.pop());
-                         //   insertarEnPolaca("ET_end_cond" + polaca.size() + 1, pila.pop() );
-                         //insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() ); // aca iria el fin de cond, hay que tener el numero
-                         }
+                              insertarEnPolaca(etiquetasAssembler.pop(), pila.pop());  
+                        }
                          insertarEnPolaca(etiquetasAssembler.pop());
                          insertarEnPolaca(etiqueta);
                 
-                        //insertarEnPolaca(String.valueOf(pila.pop()));
-                       // insertarEnPolaca(polaca.get(pila.pop())); // inserto directamente la etiqueta, no el numero
-
                          RESULT = new Symbol(-1); 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$2",25, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -649,10 +626,10 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 
-                        String etiquetaCond = "ET_cond"+contEtCond;
-                        pilaEtiquetasIf.push(contEtCond);
-                         contEtCond++;
-                         insertarEnPolaca(etiquetaCond);
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                         insertarEnPolaca(etiqueta);
+                        contadorEtiquetas++;
+                         
                          RESULT = new Symbol(-1); 
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$3",26, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -665,8 +642,12 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =(Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).value;
 
 
-                    if(isOr!=0){
-                         posicionesBloqueVerdaderoOr.push(polaca.size());
+                    if(pilaIsOr.size() != 0 && pilaIsOr.peek()){ //Si es or, se mete una etiqueta al comienzo de la parte v
+                            String etiqueta = "ET_aux" + contadorEtiquetas;
+                              insertarEnPolaca(etiqueta);
+                              etiquetaPosicionBloqueVerdaderoOr.push(etiqueta);
+                              contadorEtiquetas++; 
+                      
                     }
                     RESULT = new Symbol(-1); 
                     
@@ -691,23 +672,23 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =null;
 
 
-                         insertarEnPolaca("BI"); // jmp
-                          //insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
-                          // else part numero
-                          String etiqueta = "ET_else_cond" + pilaEtiquetasIf.peek(); // no saco, solo miro
+                         insertarEnPolaca("BI");
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                          etiquetasAssembler.push(etiqueta);
                           insertarEnPolaca(etiqueta,pila.pop());
-                          if(hayDobleComparacion != 0){
-                               if(isOr!=0){
-                                    insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop() );
-                                   isOr--;
+                          contadorEtiquetas++;
+                          if(pilaDobleComparacion.pop()){
+                               String etiquetaAParteFalsa = etiquetasAssembler.pop();
+                              if(pilaIsOr.pop()){
+                                   insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                                }else {
-                                    insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
-                               }
-                               hayDobleComparacion--; 
+                                  insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
+                               }                        
                           }
-                         pila.push(polaca.size() );
+
+                         pila.push(polaca.size());
                          avanzar();
-                         insertarEnPolaca(etiqueta); // else_part:
+                         insertarEnPolaca(etiqueta); 
                          RESULT = new Symbol(-1); 
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$5",28, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -721,10 +702,12 @@ class CUP$AnalizadorSintactico$actions {
               // propagate RESULT from NT$5
                 RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
 		
-                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
-                         insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
-                         insertarEnPolaca(etiqueta); // end_if:
-                         System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                         insertarEnPolaca(etiqueta);
+                         insertarEnPolaca(etiqueta, pila.pop());
+                         contadorEtiquetas++;
+                         
+                    System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
                 
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("seleccion_else",13, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -735,22 +718,19 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
-                    // hay que ver doble comparacion
-                     if(hayDobleComparacion != 0){
-                          insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
-                          if(isOr != 0){
-                              insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop() );
-                               isOr--;
+                    String etiquetaFinalIf = "ET_aux" + contadorEtiquetas;
+                          insertarEnPolaca(etiquetaFinalIf);
+                          contadorEtiquetas++;
+                    if(pilaDobleComparacion.pop()){
+                           insertarEnPolaca(etiquetaFinalIf, pila.pop());
+                          if(pilaIsOr.pop()){
+                             insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                           } else {
-                              insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                            insertarEnPolaca(etiquetaFinalIf, pila.pop());
                           }
                     
-                         hayDobleComparacion--; 
                      } else {
-                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
-                        insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
-                        insertarEnPolaca(etiqueta); // end_if:
-                          //insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                         insertarEnPolaca(etiquetaFinalIf,pila.pop());
                      }
                      System.out.println("If sin else"); 
                      RESULT = new Symbol(-1); 
@@ -775,6 +755,7 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		
+                         pilaDobleComparacion.push(false);
                          System.out.println("R15: condicion -> comparacion");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("condicion",10, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -786,7 +767,8 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		 
-                         hayDobleComparacion++; 
+                         pilaDobleComparacion.push(true);
+                         pilaIsOr.push(false);
                          System.out.println("R16: condicion -> comparacion OP_AND  comparacion");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("condicion",10, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-2)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -799,7 +781,7 @@ class CUP$AnalizadorSintactico$actions {
               Symbol RESULT =null;
  
                          String contrario = obtenerContrario(polaca.size()-2);
-                         isOr++;   
+                         pilaIsOr.push(true);  
                          insertarEnPolaca(contrario, polaca.size() - 2);
                          RESULT = new Symbol(-1); 
 
@@ -815,7 +797,7 @@ class CUP$AnalizadorSintactico$actions {
               // propagate RESULT from NT$6
                 RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
 		 
-                         hayDobleComparacion++; 
+                         pilaDobleComparacion.push(true);
                          System.out.println("R17: condicion -> comparacion OP_OR comparacion");
                     
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("condicion",10, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -826,7 +808,8 @@ class CUP$AnalizadorSintactico$actions {
           case 26: // condicion ::= OP_NOT comparacion 
             {
               Symbol RESULT =null;
-		 
+		
+                         pilaDobleComparacion.push(false);
                          String contrario = obtenerContrario(polaca.size()-2);
                          insertarEnPolaca(contrario, polaca.size() - 2);
                           System.out.println("R18: condicion -> OP_NOT comparacion");
@@ -840,7 +823,7 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 		 
-                        insertarEnPolaca("CMP");
+                        insertarEnPolaca("CMP");                 
                          insertarEnPolaca(comparadorString);
                          pila.push(polaca.size());
                          avanzar();
@@ -932,6 +915,7 @@ class CUP$AnalizadorSintactico$actions {
 		int OP_SUMright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
 		String OP_SUM = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
 		
+                    // guardar la exp en un aux
                     System.out.println("expresion -> expresion OP_SUM termino");
                     insertarEnPolaca(OP_SUM);    
                
@@ -947,6 +931,7 @@ class CUP$AnalizadorSintactico$actions {
 		int OP_RESright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).right;
 		String OP_RES = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-1)).value;
 		
+                    // guardar la exp en un aux
                     System.out.println("expresion -> expresion OP_RES termino");  
                     insertarEnPolaca(OP_RES);   
                
@@ -1065,9 +1050,9 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_FLOATright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_FLOAT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		 
-                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT.replace(".", "_"), null, CONST_FLOAT, null);
                          System.out.println("variable -> CONST_FLOAT");
-                        insertarEnPolaca("_" +CONST_FLOAT);
+                        insertarEnPolaca("_" +CONST_FLOAT.replace(".", "_"));
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("variable",20, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
@@ -1083,7 +1068,7 @@ class CUP$AnalizadorSintactico$actions {
 		 
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                        insertarEnPolaca("_" +valorDecimal);
+                        insertarEnPolaca("_" +CTE_BIN);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("variable -> CTE_BIN");
                
@@ -1101,7 +1086,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          String valorHexa = CTE_HEXA.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                         insertarEnPolaca("_" +valorDecimal);
+                         insertarEnPolaca("_" +CTE_HEXA);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("variable -> CTE_HEXA");
                
@@ -1292,8 +1277,8 @@ class CUP$AnalizadorSintactico$actions {
 		int CONST_FLOATright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		String CONST_FLOAT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		   
-                    insertarEnPolaca("_" +CONST_FLOAT);
-                    tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
+                    insertarEnPolaca("_" +CONST_FLOAT.replace(".", "_"));
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT.replace(".", "_"), null, CONST_FLOAT, null);
                     System.out.println("factor -> CONST_FLOAT: " + CONST_FLOAT);
 		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     
@@ -1331,7 +1316,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                     String valorBin = CTE_BIN.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                    insertarEnPolaca("_"+valorDecimal);
+                    insertarEnPolaca("_"+CTE_BIN);
                     tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                     System.out.println("factor -> cte_bin: " + CTE_BIN);
 		          System.out.println("constante CTE_BIN: " + CTE_BIN);
@@ -1350,7 +1335,7 @@ class CUP$AnalizadorSintactico$actions {
 		 
                     String valorHexa = CTE_HEXA.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                    insertarEnPolaca("_"+valorDecimal);
+                    insertarEnPolaca("_"+CTE_HEXA);
                     tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                     System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
@@ -1375,51 +1360,76 @@ class CUP$AnalizadorSintactico$actions {
             {
               Symbol RESULT =null;
 
-                    tablaDeSimbolos.agregarEnTabla("@constanteAContar", null, null, null);
-                    tablaDeSimbolos.agregarEnTabla("@contador", "Integer", null, null);
-                   insertarEnPolaca("@constanteAContar");
-                   insertarEnPolaca(":");
-                   insertarEnPolaca("0");
-                   insertarEnPolaca("@contador");
-                   insertarEnPolaca(":");
-                   RESULT = new Symbol(-1); 
-
+               String aux = "@aux" + contadorAux;
+               insertarEnPolaca(aux);
+               insertarEnPolaca(":"); 
+               tablaDeSimbolos.agregarEnTabla(aux, null, null, null);
+               RESULT = new Symbol(-1); 
                
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$7",30, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 64: // factor ::= CONTAR PA expresion PYC NT$7 CA list_constantes CC PC 
+          case 64: // NT$8 ::= 
             {
-              Symbol RESULT =null;
-              // propagate RESULT from NT$7
-                RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).value;
-		
-                 System.out.println("factor -> CONTAR PA expresion PYC CA list_exp CC PC");
-                     insertarEnPolaca("@contador");
-                    RESULT = new Symbol(-1); 
+              Symbol RESULT =(Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-3)).value;
+
+                    tablaDeSimbolos.agregarEnTabla("@constanteAContar", null, null, null);
+                    tablaDeSimbolos.agregarEnTabla("@contador", "Integer", null, null);
+                   insertarEnPolaca("@constanteAContar");
+                   insertarEnPolaca(":");
+                   tablaDeSimbolos.agregarEnTabla("_0", null, "0", null);
+                   insertarEnPolaca("_0");
+                   insertarEnPolaca("@contador");
+                   insertarEnPolaca(":");
+                   RESULT = new Symbol(-1); 
+
                
-              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("factor",7, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-8)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$8",31, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 65: // list_constantes ::= list_constantes COMA constantes 
+          case 65: // factor ::= CONTAR NT$7 PA expresion PYC NT$8 CA list_constantes CC PC 
+            {
+              Symbol RESULT =null;
+              // propagate RESULT from NT$8
+                RESULT = (Symbol) ((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-4)).value;
+		
+                 System.out.println("factor -> CONTAR PA expresion PYC CA list_exp CC PC");
+                    String aux = "@aux" + contadorAux;
+                     insertarEnPolaca(aux);
+                     insertarEnPolaca("@contador");
+                     contadorAux++;
+                    RESULT = new Symbol(-1); 
+               
+              CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("factor",7, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.elementAt(CUP$AnalizadorSintactico$top-9)), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
+            }
+          return CUP$AnalizadorSintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 66: // list_constantes ::= list_constantes COMA constantes 
             {
               Symbol RESULT =null;
 		  
+
+                  String etiqueta = "ET_aux" + contadorEtiquetas;
+                   contadorEtiquetas++;
                  insertarEnPolaca("@constanteAContar");
                    insertarEnPolaca("CMP");
                     insertarEnPolaca("BNE");
                     pila.push(polaca.size());
                     avanzar();
-                    insertarEnPolaca("1");
+                    insertarEnPolaca("_1");
+                    tablaDeSimbolos.agregarEnTabla("_1", null, "1", null);
                     insertarEnPolaca("@contador");
                     insertarEnPolaca("+");
                     insertarEnPolaca("@contador");
                     insertarEnPolaca(":");
-                    insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
+                    insertarEnPolaca(etiqueta);
+                   insertarEnPolaca(etiqueta,pila.pop());
+                  //  insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> list_constantes COMA constantes");
                     RESULT = new Symbol(-1); 
    
@@ -1429,21 +1439,25 @@ class CUP$AnalizadorSintactico$actions {
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 66: // list_constantes ::= constantes 
+          case 67: // list_constantes ::= constantes 
             {
               Symbol RESULT =null;
 		 
+                   String etiqueta = "ET_aux" + contadorEtiquetas;
+                   contadorEtiquetas++;
                    insertarEnPolaca("@constanteAContar");
                    insertarEnPolaca("CMP");
                     insertarEnPolaca("BNE");
                     pila.push(polaca.size());
                     avanzar();
-                    insertarEnPolaca("1");
+                    insertarEnPolaca("_1");
                     insertarEnPolaca("@contador");
                     insertarEnPolaca("+");
                     insertarEnPolaca("@contador");
                     insertarEnPolaca(":");
-                    insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
+                    insertarEnPolaca(etiqueta);
+                    insertarEnPolaca(etiqueta,pila.pop());
+                 //   insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> constantes");
                      RESULT = new Symbol(-1); 
                
@@ -1452,7 +1466,7 @@ class CUP$AnalizadorSintactico$actions {
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 67: // constantes ::= CONST_INT 
+          case 68: // constantes ::= CONST_INT 
             {
               Symbol RESULT =null;
 		int CONST_INTleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
@@ -1468,7 +1482,7 @@ class CUP$AnalizadorSintactico$actions {
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 68: // constantes ::= CONST_FLOAT 
+          case 69: // constantes ::= CONST_FLOAT 
             {
               Symbol RESULT =null;
 		int CONST_FLOATleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
@@ -1476,8 +1490,8 @@ class CUP$AnalizadorSintactico$actions {
 		String CONST_FLOAT = (String)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
 		
                     
-                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
-                          insertarEnPolaca("_" +CONST_FLOAT);
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT.replace(".", "_"), null, CONST_FLOAT, null);
+                          insertarEnPolaca("_" +CONST_FLOAT.replace(".", "_"));
                             System.out.println("Constante: "+ CONST_FLOAT);
 
                     
@@ -1486,7 +1500,7 @@ class CUP$AnalizadorSintactico$actions {
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 69: // constantes ::= CTE_BIN 
+          case 70: // constantes ::= CTE_BIN 
             {
               Symbol RESULT =null;
 		int CTE_BINleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
@@ -1495,7 +1509,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                         insertarEnPolaca("_"+valorDecimal);
+                         insertarEnPolaca("_"+CTE_BIN);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_BIN);
 
@@ -1505,7 +1519,7 @@ class CUP$AnalizadorSintactico$actions {
           return CUP$AnalizadorSintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 70: // constantes ::= CTE_HEXA 
+          case 71: // constantes ::= CTE_HEXA 
             {
               Symbol RESULT =null;
 		int CTE_HEXAleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
@@ -1514,7 +1528,7 @@ class CUP$AnalizadorSintactico$actions {
 		
                          String valorHexa = CTE_HEXA.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                         insertarEnPolaca("_" +valorDecimal);
+                         insertarEnPolaca("_" +CTE_HEXA);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_HEXA);
 

@@ -195,8 +195,7 @@ public class GeneradorAssembler{
         String cadena = "\tFXCH\n" +
                 "\tFCOMP\n" +
                 "\tFSTSW AX\n" +
-                "\tSAHF\n" +
-                "\tFFREE\n";
+                "\tSAHF\n" ;
         return cadena;
     }
 

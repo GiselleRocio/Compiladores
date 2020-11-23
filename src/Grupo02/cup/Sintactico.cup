@@ -15,23 +15,21 @@ action code
      public Queue<String> colaNombres = new LinkedList();
      public Queue<String> colaTipoDato = new LinkedList(); 
      public Stack<Integer> pila = new Stack<Integer>();
-     public Stack<Integer> posicionesBloqueVerdaderoOr = new Stack<Integer>();
      
      public Stack<String> etiquetasAssembler = new Stack<String>();
      public Stack<String> etiquetaPosicionBloqueVerdaderoOr = new Stack<String>(); 
      public int contadorEtiquetas = 0; 
+     public Stack<Boolean> pilaDobleComparacion = new Stack<Boolean>();
+     public Stack<Boolean> pilaIsOr = new Stack<Boolean>();
 
-     public Stack<Integer> pilaEtiquetasIf = new Stack<Integer>();
      public ArrayList<String> polaca = new ArrayList<String>();
      public String comparadorString = "";
-     public int hayDobleComparacion= 0;
-     public int isOr = 0;
+     
      public int contador = 0;
      public int constanteAContar = 0;  
      public Polaca polacaManager = new Polaca();
-     private int contEtiquetaWhile = 0;
-     private int contEtCond = 0; //usamos etiquetas para cada condicion, en vez de if
      private int contadorCteString = 1;
+     public int contadorAux = 0;
      public GeneradorAssembler assemblerManager = new GeneradorAssembler(); 
      public void insertarEnPolaca(String contenido){
           polaca.add(contenido);
@@ -159,28 +157,18 @@ asig           ::= ID:ID OP_AS:OP_AS expresion
                     :};
 
 iteracion      ::= WHILE {:
-                         pila.push(polaca.size());
-                       //  insertarEnPolaca("ET_while"+contEtiquetaWhile);
-                         // contEtiquetaWhile++;
+
                          String etiqueta = "ET_aux" + contadorEtiquetas;
                          insertarEnPolaca(etiqueta);
                          etiquetasAssembler.push(etiqueta);
                          contadorEtiquetas++;
-
-                         // por ahora por ser unica condicion lo hacemos aca, habra que ver doble comparacion y el if
-                         // String etiquetaCond = "ET_cond"+contEtCond;
-                         // contEtCond++;
-                         // insertarEnPolaca(etiquetaCond);
-                         // termina
                          RESULT = new Symbol(-1); 
                     :}PA condicion {:
- 
-                         if(isOr != 0){
-                              // posicionesBloqueVerdaderoOr.push(polaca.size());
+                         if(pilaIsOr.size() != 0 && pilaIsOr.peek()){ //Si es or, se mete una etiqueta al comienzo de la parte verdadera
                               String etiqueta = "ET_aux" + contadorEtiquetas;
                               insertarEnPolaca(etiqueta);
                               etiquetaPosicionBloqueVerdaderoOr.push(etiqueta);
-                              contadorEtiquetas++; // ACA ESTA EL ERRORRR va contadorEtiquetas++;
+                              contadorEtiquetas++; 
                          }
                          RESULT = new Symbol(-1); 
                     :}PC LA prog {: 
@@ -188,48 +176,41 @@ iteracion      ::= WHILE {:
                          String etiqueta = "ET_aux" + contadorEtiquetas;
                          etiquetasAssembler.push(etiqueta);
                          contadorEtiquetas++;
-                         if(hayDobleComparacion != 0){
-                            // aca hay que ver lo de las etiquetas
-                           //  insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
-                              String etiquetaAParteFalsa = etiquetasAssembler.pop();
+                         if(pilaDobleComparacion.pop()){
+                            String etiquetaAParteFalsa = etiquetasAssembler.pop();
                               insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
-                              if(isOr != 0){
-                                  // insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop());
-                                  insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
-                                   isOr--; 
+                              if(pilaIsOr.pop()){
+                                 insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                               } else {
-                              //     insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() );
-                                     insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
+                              insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
 
                               }
-                              hayDobleComparacion--; 
                          } else {
                               System.out.println(etiquetasAssembler);
-                              insertarEnPolaca(etiquetasAssembler.pop(), pila.pop());
-                         //   insertarEnPolaca("ET_end_cond" + polaca.size() + 1, pila.pop() );
-                         //insertarEnPolaca(String.valueOf(polaca.size() + 1), pila.pop() ); // aca iria el fin de cond, hay que tener el numero
-                         }
+                              insertarEnPolaca(etiquetasAssembler.pop(), pila.pop());  
+                        }
                          insertarEnPolaca(etiquetasAssembler.pop());
                          insertarEnPolaca(etiqueta);
                 
-                        //insertarEnPolaca(String.valueOf(pila.pop()));
-                       // insertarEnPolaca(polaca.get(pila.pop())); // inserto directamente la etiqueta, no el numero
-
                          RESULT = new Symbol(-1); 
                     :}  LC
                     {:
                          System.out.println("R11: iteracion -> WHILE condicion  LA prog  lc");
                     :}; 
 seleccion      ::= IF {:
-                        String etiquetaCond = "ET_cond"+contEtCond;
-                        pilaEtiquetasIf.push(contEtCond);
-                         contEtCond++;
-                         insertarEnPolaca(etiquetaCond);
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                         insertarEnPolaca(etiqueta);
+                        contadorEtiquetas++;
+                         
                          RESULT = new Symbol(-1); 
                     :} PA condicion PC LA{:
 
-                    if(isOr!=0){
-                         posicionesBloqueVerdaderoOr.push(polaca.size());
+                    if(pilaIsOr.size() != 0 && pilaIsOr.peek()){ //Si es or, se mete una etiqueta al comienzo de la parte v
+                            String etiqueta = "ET_aux" + contadorEtiquetas;
+                              insertarEnPolaca(etiqueta);
+                              etiquetaPosicionBloqueVerdaderoOr.push(etiqueta);
+                              contadorEtiquetas++; 
+                      
                     }
                     RESULT = new Symbol(-1); 
                     :} prog LC seleccion_else; 
@@ -237,50 +218,49 @@ seleccion      ::= IF {:
 
 seleccion_else ::= ELSE {:
 
-                         insertarEnPolaca("BI"); // jmp
-                          //insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
-                          // else part numero
-                          String etiqueta = "ET_else_cond" + pilaEtiquetasIf.peek(); // no saco, solo miro
+                         insertarEnPolaca("BI");
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                          etiquetasAssembler.push(etiqueta);
                           insertarEnPolaca(etiqueta,pila.pop());
-                          if(hayDobleComparacion != 0){
-                               if(isOr!=0){
-                                    insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop() );
-                                   isOr--;
+                          contadorEtiquetas++;
+                          if(pilaDobleComparacion.pop()){
+                               String etiquetaAParteFalsa = etiquetasAssembler.pop();
+                              if(pilaIsOr.pop()){
+                                   insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                                }else {
-                                    insertarEnPolaca(String.valueOf(polaca.size()+1), pila.pop() );
-                               }
-                               hayDobleComparacion--; 
+                                  insertarEnPolaca(etiquetaAParteFalsa, pila.pop());
+                               }                        
                           }
-                         pila.push(polaca.size() );
+
+                         pila.push(polaca.size());
                          avanzar();
-                         insertarEnPolaca(etiqueta); // else_part:
+                         insertarEnPolaca(etiqueta); 
                          RESULT = new Symbol(-1); 
                :} LA prog LC
                 {:
-                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
-                         insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
-                         insertarEnPolaca(etiqueta); // end_if:
-                         System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
+                         String etiqueta = "ET_aux" + contadorEtiquetas;
+                         insertarEnPolaca(etiqueta);
+                         insertarEnPolaca(etiqueta, pila.pop());
+                         contadorEtiquetas++;
+                         
+                    System.out.println("R14: seleccion_else -> IF condicion LA prog LC ELSE prog");
                 :} 
                 | 
                 vacio 
                 {:
-                    // hay que ver doble comparacion
-                     if(hayDobleComparacion != 0){
-                          insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
-                          if(isOr != 0){
-                              insertarEnPolaca(String.valueOf(posicionesBloqueVerdaderoOr.pop()), pila.pop() );
-                               isOr--;
+                    String etiquetaFinalIf = "ET_aux" + contadorEtiquetas;
+                          insertarEnPolaca(etiquetaFinalIf);
+                          contadorEtiquetas++;
+                    if(pilaDobleComparacion.pop()){
+                           insertarEnPolaca(etiquetaFinalIf, pila.pop());
+                          if(pilaIsOr.pop()){
+                             insertarEnPolaca(etiquetaPosicionBloqueVerdaderoOr.pop(), pila.pop());
                           } else {
-                              insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                            insertarEnPolaca(etiquetaFinalIf, pila.pop());
                           }
                     
-                         hayDobleComparacion--; 
                      } else {
-                        String etiqueta = "ET_end_cond"+pilaEtiquetasIf.pop(); // como es el final, saco
-                        insertarEnPolaca(etiqueta, pila.pop() ); // jmp to end_if
-                        insertarEnPolaca(etiqueta); // end_if:
-                          //insertarEnPolaca(String.valueOf(polaca.size()), pila.pop() );
+                         insertarEnPolaca(etiquetaFinalIf,pila.pop());
                      }
                      System.out.println("If sin else"); 
                      RESULT = new Symbol(-1); 
@@ -293,33 +273,36 @@ vacio          ::= {:
 
 condicion      ::= comparacion
                     {:
+                         pilaDobleComparacion.push(false);
                          System.out.println("R15: condicion -> comparacion");
                     :}
                     | comparacion OP_AND  comparacion
                     {: 
-                         hayDobleComparacion++; 
+                         pilaDobleComparacion.push(true);
+                         pilaIsOr.push(false);
                          System.out.println("R16: condicion -> comparacion OP_AND  comparacion");
                     :} 
                     | comparacion OP_OR {: 
                          String contrario = obtenerContrario(polaca.size()-2);
-                         isOr++;   
+                         pilaIsOr.push(true);  
                          insertarEnPolaca(contrario, polaca.size() - 2);
                          RESULT = new Symbol(-1); 
 
                     :} comparacion
                     {: 
-                         hayDobleComparacion++; 
+                         pilaDobleComparacion.push(true);
                          System.out.println("R17: condicion -> comparacion OP_OR comparacion");
                     :}
                     | OP_NOT comparacion
-                    {: 
+                    {:
+                         pilaDobleComparacion.push(false);
                          String contrario = obtenerContrario(polaca.size()-2);
                          insertarEnPolaca(contrario, polaca.size() - 2);
                           System.out.println("R18: condicion -> OP_NOT comparacion");
                     :}; 
 comparacion    ::= expresion comparador expresion
                     {: 
-                        insertarEnPolaca("CMP");
+                        insertarEnPolaca("CMP");                 
                          insertarEnPolaca(comparadorString);
                          pila.push(polaca.size());
                          avanzar();
@@ -361,11 +344,13 @@ comparador     ::= OP_MAYIG
         
 expresion      ::= expresion OP_SUM:OP_SUM termino
                {:
+                    // guardar la exp en un aux
                     System.out.println("expresion -> expresion OP_SUM termino");
                     insertarEnPolaca(OP_SUM);    
                :}
                | expresion OP_RES:OP_RES termino
                {:
+                    // guardar la exp en un aux
                     System.out.println("expresion -> expresion OP_RES termino");  
                     insertarEnPolaca(OP_RES);   
                :}
@@ -408,21 +393,21 @@ variable       ::= CONST_STR:CONST_STR {:
                          insertarEnPolaca("_" +CONST_INT);
                :}
                | CONST_FLOAT:CONST_FLOAT {: 
-                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT.replace(".", "_"), null, CONST_FLOAT, null);
                          System.out.println("variable -> CONST_FLOAT");
-                        insertarEnPolaca("_" +CONST_FLOAT);
+                        insertarEnPolaca("_" +CONST_FLOAT.replace(".", "_"));
                :}
                 | CTE_BIN:CTE_BIN {: 
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                        insertarEnPolaca("_" +valorDecimal);
+                        insertarEnPolaca("_" +CTE_BIN);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("variable -> CTE_BIN");
                :}
                 | CTE_HEXA:CTE_HEXA {:
                          String valorHexa = CTE_HEXA.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                         insertarEnPolaca("_" +valorDecimal);
+                         insertarEnPolaca("_" +CTE_HEXA);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("variable -> CTE_HEXA");
                :};
@@ -496,8 +481,8 @@ factor         ::= ID:ID
 		     :}
                | CONST_FLOAT:CONST_FLOAT
                {:   
-                    insertarEnPolaca("_" +CONST_FLOAT);
-                    tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
+                    insertarEnPolaca("_" +CONST_FLOAT.replace(".", "_"));
+                    tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT.replace(".", "_"), null, CONST_FLOAT, null);
                     System.out.println("factor -> CONST_FLOAT: " + CONST_FLOAT);
 		          System.out.println("constante flotante: " + CONST_FLOAT);
 		     :}
@@ -515,7 +500,7 @@ factor         ::= ID:ID
                {:
                     String valorBin = CTE_BIN.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                    insertarEnPolaca("_"+valorDecimal);
+                    insertarEnPolaca("_"+CTE_BIN);
                     tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                     System.out.println("factor -> cte_bin: " + CTE_BIN);
 		          System.out.println("constante CTE_BIN: " + CTE_BIN);
@@ -524,7 +509,7 @@ factor         ::= ID:ID
                {: 
                     String valorHexa = CTE_HEXA.substring(2);
                     String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                    insertarEnPolaca("_"+valorDecimal);
+                    insertarEnPolaca("_"+CTE_HEXA);
                     tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                     System.out.println("factor -> CTE_HEXA: " + CTE_HEXA);
 		          System.out.println("constante CTE_HEXA: " + CTE_HEXA);
@@ -533,52 +518,73 @@ factor         ::= ID:ID
                {:
                     System.out.println("factor -> PA expresion PC");
 		     :}
-               | CONTAR PA expresion PYC {:
+               | CONTAR {:
+               String aux = "@aux" + contadorAux;
+               insertarEnPolaca(aux);
+               insertarEnPolaca(":"); 
+               tablaDeSimbolos.agregarEnTabla(aux, null, null, null);
+               RESULT = new Symbol(-1); 
+               :}
+               PA expresion PYC {:
                     tablaDeSimbolos.agregarEnTabla("@constanteAContar", null, null, null);
                     tablaDeSimbolos.agregarEnTabla("@contador", "Integer", null, null);
                    insertarEnPolaca("@constanteAContar");
                    insertarEnPolaca(":");
-                   insertarEnPolaca("0");
+                   tablaDeSimbolos.agregarEnTabla("_0", null, "0", null);
+                   insertarEnPolaca("_0");
                    insertarEnPolaca("@contador");
                    insertarEnPolaca(":");
                    RESULT = new Symbol(-1); 
 
                :}  CA list_constantes CC PC {:
                  System.out.println("factor -> CONTAR PA expresion PYC CA list_exp CC PC");
+                    String aux = "@aux" + contadorAux;
+                     insertarEnPolaca(aux);
                      insertarEnPolaca("@contador");
+                     contadorAux++;
                     RESULT = new Symbol(-1); 
                :};
-
+                    
  list_constantes  ::= list_constantes COMA constantes
                {:  
+
+                  String etiqueta = "ET_aux" + contadorEtiquetas;
+                   contadorEtiquetas++;
                  insertarEnPolaca("@constanteAContar");
                    insertarEnPolaca("CMP");
                     insertarEnPolaca("BNE");
                     pila.push(polaca.size());
                     avanzar();
-                    insertarEnPolaca("1");
+                    insertarEnPolaca("_1");
+                    tablaDeSimbolos.agregarEnTabla("_1", null, "1", null);
                     insertarEnPolaca("@contador");
                     insertarEnPolaca("+");
                     insertarEnPolaca("@contador");
                     insertarEnPolaca(":");
-                    insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
+                    insertarEnPolaca(etiqueta);
+                   insertarEnPolaca(etiqueta,pila.pop());
+                  //  insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> list_constantes COMA constantes");
                     RESULT = new Symbol(-1); 
    
                :}
                 | constantes
                {: 
+                   String etiqueta = "ET_aux" + contadorEtiquetas;
+                   contadorEtiquetas++;
                    insertarEnPolaca("@constanteAContar");
                    insertarEnPolaca("CMP");
                     insertarEnPolaca("BNE");
                     pila.push(polaca.size());
                     avanzar();
-                    insertarEnPolaca("1");
+                    insertarEnPolaca("_1");
                     insertarEnPolaca("@contador");
                     insertarEnPolaca("+");
                     insertarEnPolaca("@contador");
                     insertarEnPolaca(":");
-                    insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
+                    insertarEnPolaca(etiqueta);
+                    insertarEnPolaca(etiqueta,pila.pop());
+                 //   insertarEnPolaca(String.valueOf(polaca.size()), pila.pop());
                     System.out.println("list_constantes -> constantes");
                      RESULT = new Symbol(-1); 
                :} ;
@@ -588,21 +594,21 @@ constantes     ::= CONST_INT:CONST_INT {:
                           System.out.println("Constante: "+ CONST_INT);
                     :} | CONST_FLOAT:CONST_FLOAT {:
                     
-                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT, null, CONST_FLOAT, null);
-                          insertarEnPolaca("_" +CONST_FLOAT);
+                         tablaDeSimbolos.agregarEnTabla("_"+CONST_FLOAT.replace(".", "_"), null, CONST_FLOAT, null);
+                          insertarEnPolaca("_" +CONST_FLOAT.replace(".", "_"));
                             System.out.println("Constante: "+ CONST_FLOAT);
 
                     :} | CTE_BIN:CTE_BIN {:
                          String valorBin = CTE_BIN.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorBin,2));
-                         insertarEnPolaca("_"+valorDecimal);
+                         insertarEnPolaca("_"+CTE_BIN);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_BIN, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_BIN);
 
                     :} | CTE_HEXA:CTE_HEXA {:
                          String valorHexa = CTE_HEXA.substring(2);
                          String valorDecimal = String.valueOf(Integer.parseInt(valorHexa,16));
-                         insertarEnPolaca("_" +valorDecimal);
+                         insertarEnPolaca("_" +CTE_HEXA);
                          tablaDeSimbolos.agregarEnTabla("_"+CTE_HEXA, null, valorDecimal, null);
                          System.out.println("Constante: "+ CTE_HEXA);
 
